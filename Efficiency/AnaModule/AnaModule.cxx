@@ -234,7 +234,7 @@ void AnaModule::effi_h4(Tracklet* tracklet)
   int nhodo = hodo4.size();
   for(int i = 0; i < nhodo; i++)
   {
-    int det_id = hodo3.at(i);
+    int det_id = hodo4.at(i);
     int exp_id = fit_prop(det_id, tracklet);
     
     SQHit* hit = findHit(det_id, exp_id);
@@ -273,6 +273,6 @@ bool AnaModule::acc_h4(Tracklet* tracklet)
   
   int mask_hits = acc_mask.size();
   
-  if(mask_hist != 6){return false;}
+  if(mask_hits != 6){return false;}
   return true;
 }
