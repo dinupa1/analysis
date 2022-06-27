@@ -238,8 +238,8 @@ void AnaModule::effi_h4(Tracklet* tracklet)
     //int exp_id = fit_prop(det_id, tracklet);
     
     double z_exp = p_geomSvc->getPlanePosition(det_id);
-    x_exp = tracklet->getExpPositionX(z_exp);
-    y_exp = tracklet->getExpPositionY(z_exp);
+    double x_exp = tracklet->getExpPositionX(z_exp);
+    double y_exp = tracklet->getExpPositionY(z_exp);
     
     if(!p_geomSvc->isInPlane(det_id, x_exp, y_exp)) continue;
     
