@@ -243,7 +243,7 @@ void AnaModule::effi_h4(Tracklet* tracklet)
     
     if(!p_geomSvc->isInPlane(det_id, x_exp, y_exp)) continue;
     
-    int exp_id = p_geomSvc->getExpElementID(detectorID, tracklet->getExpPositionW(det_id));
+    int exp_id = p_geomSvc->getExpElementID(det_id, tracklet->getExpPositionW(det_id));
     if(exp_id < 1 || exp_id > p_geomSvc->getPlaneNElements(det_id)) continue;
     
     SQHit* hit = findHit(det_id, exp_id);
