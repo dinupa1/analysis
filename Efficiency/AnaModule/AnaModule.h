@@ -8,6 +8,7 @@
 #include <TVector3.h>
 #include <interface_main/SQEvent.h>
 #include <TGraphErrors.h>
+#include <TGraph2DErrors.h>
 #include <TF1.h>
 #include <ktracker/SRecEvent.h>
 #include <ktracker/FastTracklet.h>
@@ -39,6 +40,7 @@ private:
   void MakeTree();
   int fit_prop(int det_id, Tracklet* tracklet);
   void effi_h4(Tracklet* tracklet);
+  bool acc_h4(Tracklet* tracklet);
 
   SQHit* findHit(int detectorID, int elementID);
   std::set<int> detectorIDs;

@@ -40,6 +40,10 @@ int AnaModule::process_event(PHCompositeNode* topNode)
     Tracklet* tracklet = trackletVec->at(i);
     nHits = tracklet->getNHits();
     chisq = tracklet->getChisq();
+    
+    // get only acctepted NIM4 tracks
+    if(!event->get_trigger(SQEvent::NIM4)) continue;
+    if(!acc_h4(tracklet)) continue;
 
     //very loose cuts here
     if(nHits < 9) continue;
@@ -115,35 +119,68 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
 {
   std::vector<int> track3 = {19, 21, 22, 51, 52, 53, 54};
 
-  TGraphErrors* gx = new TGraphErrors();
-  TGraphErrors* gy = new TGraphErrors();
+  /*TGraphErrors* gx = new TGraphErrors();
+  TGraphErrors* gy = new TGraphErrors();*/
+  TGraph2DErrors* gg = new TGraph2DErrors();
 
   int ndet = track3.size();
 
   /*std::cout << "***     ***" << std::endl;
   std::cout << "det. size : " << ndet << std::endl;
   std::cout << "***     ***" << std::endl;*/
+  
+  double zz0;
+  double xx0;
+  double yy0;
+  double exx0;
+  double eyy0;
 
   for(int i = 0; i < ndet; i++)
   {
-    double zz0 = p_geomSvc->getPlanePosition(track3.at(i));
-    double xx0 = tracklet->getExpPositionX(zz0);
-    double yy0 = tracklet->getExpPositionY(zz0);
-    double exx0 = tracklet->getExpPosErrorX(zz0);
-    double eyy0 = tracklet->getExpPosErrorY(zz0);
+    zz0 = p_geomSvc->getPlanePosition(track3.at(i));
+    xx0 = tracklet->getExpPositionX(zz0);
+    yy0 = tracklet->getExpPositionY(zz0);
+    exx0 = tracklet->getExpPosErrorX(zz0);
+    eyy0 = tracklet->getExpPosErrorY(zz0);
+    
+    if(i > 50)
+    {
+      int nhits = hitVector->size();
+      
+      for(int j = 0; j < nHits; j++)
+      {
+        
+        SQHit* hit = hitVector->at(i);
+        
+        if(!(tracklet->get_track_id() == hit->get_track_id())) continue;
+        
+        if(hit->get_detector_id() == i)
+        {
+          zz0 = hit->get_truth_z();
+          xx0 = hit->get_truth_y();
+          yy0 = hit->get_truth_x();
+          exx0 = 0.;
+          eyy0 = 0.;
+        }
+      
+      }
+    }
 
-    // set x points
+    /*// set x points
     gx->SetPoint(i, zz0, xx0);
     gx->SetPointError(i, 0., exx0);
 
     // set y points
     gy->SetPoint(i, zz0, yy0);
-    gy->SetPointError(i, 0., eyy0);
+    gy->SetPointError(i, 0., eyy0);*/
+    
+    gg->SetPoint(i, zz0, yy0, xx0);
+    gg->SetPointError(i, 0.0, eyy0, exx0);
 
     //std::cout << "det : " << track3.at(i) << " x : " << xx0 << " y : " << yy0 << " z : " << zz0 << " ex :" << exx0 << " ey : " << eyy0 << std::endl;
   }
 
-  // fit functions
+  /*// fit functions
   TF1* fx = new TF1("fx", "[0]* x + [1]", 1900., 2400.);
   TF1* fy = new TF1("fy", "[0]* x + [1]", 1900., 2400.);
 
@@ -158,7 +195,24 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
 
   double zz1 = p_geomSvc->getPlanePosition(det_id);
   double xx1 = axx* zz1 + cxx;
-  double yy1 = ayy* zz1 + cyy;
+  double yy1 = ayy* zz1 + cyy;*/
+  
+  // fit function
+  
+  TF2* ff = TF1("f2", "[0]* x +[1]* y + [2]");
+  
+  gg->Fit("gg");
+  
+  double axx = ff->GetParameter(0);
+  double ayy = ff->GetParameter(1);
+  
+  double zz1 = p_geomSvc->getPlanePosition(det_id);
+  double zzp = p_geomSvc->getPlanePosition(21);
+  double xxp = tracklet->getExpPositionX(zzp);
+  double yyp = tracklet->getExpPositionX(zzp);
+  
+  double xx1 = xxp + axx* (zz1 - zzp);
+  double yy1 = yyp + ayy* (zz1 - zzp);
 
   /*std::cout << "***     ***" << std::endl;
   std::cout << "hodo : " << det_id << " x : " << xx1 << " y :" << yy1 << " z : " << zz1 << std::endl;
@@ -169,27 +223,56 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
     double pos = p_geomSvc->getCostheta(det_id)*xx1 + p_geomSvc->getSintheta(det_id)*yy1;
     return p_geomSvc->getExpElementID(det_id, pos);
   }
+  
+  return -1;
 }
 
 void AnaModule::effi_h4(Tracklet* tracklet)
 {
   // only NIM4 events are considered
-  if(event->get_trigger(SQEvent::NIM4))
+  std::vector<int> hodo4 = {41, 42, 43, 44, 45, 46};
+  int nhodo = hodo3.size();
+  for(int i = 0; i < nhodo; i++)
   {
-    std::vector<int> hodo4 = {41, 42, 43, 44, 45, 46};
-    int nhodo = hodo3.size();
-    for(int i = 0; i < nhodo; i++)
+    int det_id = hodo3.at(i);
+    int exp_id = fit_prop(det_id, tracklet);
+    
+    SQHit* hit = findHit(det_id, exp_id);
+    int close_id = hit == nullptr ? -1 : hit->get_element_id();
+    
+    detectorID.push_back(det_id);
+    elementID_exp.push_back(exp_id);
+    elementID_closest.push_back(close_id);
+  }
+}
+
+
+// accept event for H4 : an event should have hits in all 4 hodo. planes
+bool AnaMOdule::acc_h4(Tracklet* tracklet)
+{
+  int hodoId[6] = {41, 42, 43, 44, 45, 46};
+  
+  std::vector<int> acc_mask;
+  
+  int nhits = hitVector->size();
+  
+  for(int i = 0; i < nHits; i++)
+  {
+    for(int j = 0; j < 6; j++)
     {
-      int det_id = hodo3.at(i);
-      int exp_id = fit_prop(det_id, tracklet);
-
-      SQHit* hit = findHit(det_id, exp_id);
-      int close_id = hit == nullptr ? -1 : hit->get_element_id();
-
-      detectorID.push_back(det_id);
-      elementID_exp.push_back(exp_id);
-      elementID_closest.push_back(close_id);
+      SQHit* hit = hitVector->at(i);
+      
+      if(!(tracklet->get_track_id() == hit->get_track_id())) continue;
+      
+      if(hit->get_detector_id() == hodoId[j])
+      {
+        acc_mask.push_back(hit->get_detector_id());
+      }
     }
   }
-
+  
+  int mask_hits = acc_mask.size();
+  
+  if(mask_hist != 6){return false;}
+  return true;
 }
