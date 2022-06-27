@@ -143,7 +143,7 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
     exx0 = tracklet->getExpPosErrorX(zz0);
     eyy0 = tracklet->getExpPosErrorY(zz0);
     
-    if(i > 50)
+    /*if(i > 50)
     {
       int nhits = hitVector->size();
       
@@ -164,7 +164,7 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
         }
       
       }
-    }
+    }*/
 
     /*// set x points
     gx->SetPoint(i, zz0, xx0);
@@ -218,13 +218,13 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
   std::cout << "hodo : " << det_id << " x : " << xx1 << " y :" << yy1 << " z : " << zz1 << std::endl;
   std::cout << "***     ***" << std::endl;*/
 
-  if(p_geomSvc->isInPlane(det_id, xx1, yy1))
-  {
+  //if(p_geomSvc->isInPlane(det_id, xx1, yy1))
+  //{
     double pos = p_geomSvc->getCostheta(det_id)*xx1 + p_geomSvc->getSintheta(det_id)*yy1;
     return p_geomSvc->getExpElementID(det_id, pos);
-  }
+  //}
   
-  return -1;
+  //return -1;
 }
 
 void AnaModule::effi_h4(Tracklet* tracklet)
@@ -235,15 +235,15 @@ void AnaModule::effi_h4(Tracklet* tracklet)
   for(int i = 0; i < nhodo; i++)
   {
     int det_id = hodo4.at(i);
-    //int exp_id = fit_prop(det_id, tracklet);
+    int exp_id = fit_prop(det_id, tracklet);
     
-    double z_exp = p_geomSvc->getPlanePosition(det_id);
+    /*double z_exp = p_geomSvc->getPlanePosition(det_id);
     double x_exp = tracklet->getExpPositionX(z_exp);
     double y_exp = tracklet->getExpPositionY(z_exp);
     
+    int exp_id = p_geomSvc->getExpElementID(det_id, tracklet->getExpPositionW(det_id));*/
     if(!p_geomSvc->isInPlane(det_id, x_exp, y_exp)) continue;
     
-    int exp_id = p_geomSvc->getExpElementID(det_id, tracklet->getExpPositionW(det_id));
     if(exp_id < 1 || exp_id > p_geomSvc->getPlaneNElements(det_id)) continue;
     
     SQHit* hit = findHit(det_id, exp_id);
