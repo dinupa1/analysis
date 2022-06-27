@@ -147,10 +147,10 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
     {
       int nhits = hitVector->size();
       
-      for(int j = 0; j < nHits; j++)
+      for(int j = 0; j < nhits; j++)
       {
         
-        SQHit* hit = hitVector->at(i);
+        SQHit* hit = hitVector->at(j);
         
         //if(!(tracklet->get_track_id() == hit->get_track_id())) continue;
         
@@ -199,7 +199,7 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
   
   // fit function
   
-  TF2* ff = TF1("f2", "[0]* x +[1]* y + [2]");
+  TF2* ff = TF2("f2", "[0]* x +[1]* y + [2]");
   
   gg->Fit("gg");
   
@@ -231,7 +231,7 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 {
   // only NIM4 events are considered
   std::vector<int> hodo4 = {41, 42, 43, 44, 45, 46};
-  int nhodo = hodo3.size();
+  int nhodo = hodo4.size();
   for(int i = 0; i < nhodo; i++)
   {
     int det_id = hodo3.at(i);
@@ -256,7 +256,7 @@ bool AnaMOdule::acc_h4(Tracklet* tracklet)
   
   int nhits = hitVector->size();
   
-  for(int i = 0; i < nHits; i++)
+  for(int i = 0; i < nhits; i++)
   {
     for(int j = 0; j < 6; j++)
     {
