@@ -201,7 +201,7 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
   
   TF2* ff = new TF2("f2", "[0]* x +[1]* y + [2]");
   
-  gg->Fit("gg");
+  gg->Fit("ff");
   
   double axx = ff->GetParameter(0);
   double ayy = ff->GetParameter(1);
