@@ -218,13 +218,13 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
   std::cout << "hodo : " << det_id << " x : " << xx1 << " y :" << yy1 << " z : " << zz1 << std::endl;
   std::cout << "***     ***" << std::endl;*/
 
-  //if(p_geomSvc->isInPlane(det_id, xx1, yy1))
-  //{
+  if(p_geomSvc->isInPlane(det_id, xx1, yy1))
+  {
     double pos = p_geomSvc->getCostheta(det_id)*xx1 + p_geomSvc->getSintheta(det_id)*yy1;
     return p_geomSvc->getExpElementID(det_id, pos);
-  //}
+  }
   
-  //return -1;
+  return -1;
 }
 
 void AnaModule::effi_h4(Tracklet* tracklet)
