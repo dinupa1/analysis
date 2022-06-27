@@ -235,7 +235,16 @@ void AnaModule::effi_h4(Tracklet* tracklet)
   for(int i = 0; i < nhodo; i++)
   {
     int det_id = hodo4.at(i);
-    int exp_id = fit_prop(det_id, tracklet);
+    //int exp_id = fit_prop(det_id, tracklet);
+    
+    double z_exp = p_geomSvc->getPlanePosition(det_id);
+    x_exp = tracklet->getExpPositionX(z_exp);
+    y_exp = tracklet->getExpPositionY(z_exp);
+    
+    if(!p_geomSvc->isInPlane(detectorID, x_exp, y_exp)) continue;
+    
+    elementID_exp = p_geomSvc->getExpElementID(detectorID, tracklet->getExpPositionW(det_id));
+    if(elementID_exp < 1 || elementID_exp > p_geomSvc->getPlaneNElements(det_id)) continue;
     
     SQHit* hit = findHit(det_id, exp_id);
     int close_id = hit == nullptr ? -1 : hit->get_element_id();
