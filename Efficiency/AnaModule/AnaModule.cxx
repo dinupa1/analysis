@@ -199,7 +199,7 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
   
   // fit function
   
-  TF2* ff = TF2("f2", "[0]* x +[1]* y + [2]");
+  TF2* ff = new TF2("f2", "[0]* x +[1]* y + [2]");
   
   gg->Fit("gg");
   
@@ -248,7 +248,7 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 
 
 // accept event for H4 : an event should have hits in all 4 hodo. planes
-bool AnaMOdule::acc_h4(Tracklet* tracklet)
+bool AnaModule::acc_h4(Tracklet* tracklet)
 {
   int hodoId[6] = {41, 42, 43, 44, 45, 46};
   
