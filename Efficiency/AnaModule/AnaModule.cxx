@@ -152,7 +152,7 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
         
         SQHit* hit = hitVector->at(i);
         
-        if(!(tracklet->get_track_id() == hit->get_track_id())) continue;
+        //if(!(tracklet->get_track_id() == hit->get_track_id())) continue;
         
         if(hit->get_detector_id() == i)
         {
@@ -262,7 +262,7 @@ bool AnaMOdule::acc_h4(Tracklet* tracklet)
     {
       SQHit* hit = hitVector->at(i);
       
-      if(!(tracklet->get_track_id() == hit->get_track_id())) continue;
+      //if(!(tracklet->get_track_id() == hit->get_track_id())) continue;
       
       if(hit->get_detector_id() == hodoId[j])
       {

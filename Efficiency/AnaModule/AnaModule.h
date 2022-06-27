@@ -10,6 +10,7 @@
 #include <TGraphErrors.h>
 #include <TGraph2DErrors.h>
 #include <TF1.h>
+#include <TF2.h>
 #include <ktracker/SRecEvent.h>
 #include <ktracker/FastTracklet.h>
 #include <geom_svc/GeomSvc.h>
