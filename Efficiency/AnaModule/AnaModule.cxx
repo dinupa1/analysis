@@ -120,9 +120,9 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
 {
   std::vector<int> track3 = {19, 21, 22, 51, 52, 53, 54};
 
-  /*TGraphErrors* gx = new TGraphErrors();
-  TGraphErrors* gy = new TGraphErrors();*/
-  TGraph2DErrors* gg = new TGraph2DErrors();
+  TGraphErrors* gx = new TGraphErrors();
+  TGraphErrors* gy = new TGraphErrors();
+  //TGraph2DErrors* gg = new TGraph2DErrors();
 
   int ndet = track3.size();
 
@@ -144,7 +144,7 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
     exx0 = tracklet->getExpPosErrorX(zz0);
     eyy0 = tracklet->getExpPosErrorY(zz0);
     
-    /*if(i > 50)
+    if(i > 50)
     {
       int nhits = hitVector->size();
       
@@ -165,23 +165,23 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
         }
       
       }
-    }*/
+    }
     
     // set x points
-    /*gx->SetPoint(i, zz0, xx0);
+    gx->SetPoint(i, zz0, xx0);
     gx->SetPointError(i, 0., exx0);
 
     // set y points
     gy->SetPoint(i, zz0, yy0);
-    gy->SetPointError(i, 0., eyy0);*/
+    gy->SetPointError(i, 0., eyy0);
     
-    gg->SetPoint(i, zz0, yy0, xx0);
-    gg->SetPointError(i, 0.0, eyy0, exx0);
+    // gg->SetPoint(i, zz0, yy0, xx0);
+    // gg->SetPointError(i, 0.0, eyy0, exx0);
 
     //std::cout << "det : " << track3.at(i) << " x : " << xx0 << " y : " << yy0 << " z : " << zz0 << " ex :" << exx0 << " ey : " << eyy0 << std::endl;
   }
 
-  /*// fit functions
+  // fit functions
   TF1* fx = new TF1("fx", "[0]* x + [1]", 1900., 2400.);
   TF1* fy = new TF1("fy", "[0]* x + [1]", 1900., 2400.);
 
@@ -196,24 +196,24 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
 
   double zz1 = p_geomSvc->getPlanePosition(det_id);
   double xx1 = axx* zz1 + cxx;
-  double yy1 = ayy* zz1 + cyy;*/
+  double yy1 = ayy* zz1 + cyy;
   
   // fit function
   
-  TF2* ff = new TF2("ff", "[0]* x +[1]* y + [2]");
+//   TF2* ff = new TF2("ff", "[0]* x +[1]* y + [2]");
   
-  gg->Fit("ff");
+//   gg->Fit("ff");
   
-  double axx = ff->GetParameter(0);
-  double ayy = ff->GetParameter(1);
+//   double axx = ff->GetParameter(0);
+//   double ayy = ff->GetParameter(1);
   
-  double zz1 = p_geomSvc->getPlanePosition(det_id);
-  double zzp = p_geomSvc->getPlanePosition(21);
-  double xxp = tracklet->getExpPositionX(zzp);
-  double yyp = tracklet->getExpPositionX(zzp);
+//   double zz1 = p_geomSvc->getPlanePosition(det_id);
+//   double zzp = p_geomSvc->getPlanePosition(21);
+//   double xxp = tracklet->getExpPositionX(zzp);
+//   double yyp = tracklet->getExpPositionX(zzp);
   
-  double xx1 = xxp + axx* (zz1 - zzp);
-  double yy1 = yyp + ayy* (zz1 - zzp);
+//   double xx1 = xxp + axx* (zz1 - zzp);
+//   double yy1 = yyp + ayy* (zz1 - zzp);
 
   /*std::cout << "***     ***" << std::endl;
   std::cout << "hodo : " << det_id << " x : " << xx1 << " y :" << yy1 << " z : " << zz1 << std::endl;
