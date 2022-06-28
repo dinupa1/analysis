@@ -41,7 +41,8 @@ int AnaModule::process_event(PHCompositeNode* topNode)
     nHits = tracklet->getNHits();
     chisq = tracklet->getChisq();
     
-    // get only acctepted NIM4 tracks
+    // get only acctepted NIM4 || MATRIX5 events
+    // beam like and reverse beam like
     if((!event->get_trigger(SQEvent::NIM4))||(!event->get_trigger(SQEvent::MATRIX5))) continue;
     if(!acc_h4(tracklet)) continue;
 
