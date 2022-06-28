@@ -42,7 +42,7 @@ int AnaModule::process_event(PHCompositeNode* topNode)
     chisq = tracklet->getChisq();
     
     // get only acctepted NIM4 tracks
-    if(!event->get_trigger(SQEvent::NIM4)) continue;
+    if((!event->get_trigger(SQEvent::NIM4))||(!event->get_trigger(SQEvent::FPGA5))) continue;
     if(!acc_h4(tracklet)) continue;
 
     //very loose cuts here
@@ -165,9 +165,9 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
       
       }
     }*/
-
-    /*// set x points
-    gx->SetPoint(i, zz0, xx0);
+    
+    // set x points
+    /*gx->SetPoint(i, zz0, xx0);
     gx->SetPointError(i, 0., exx0);
 
     // set y points
