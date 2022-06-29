@@ -288,7 +288,8 @@ void AnaModule::effi_h4(Tracklet* tracklet)
   for(int i = 0; i < nhodo; i++)
   {
     int det_id = hodo4.at(i);
-    int exp_id = fit_prop(det_id, tracklet);
+    //int exp_id = fit_prop(det_id, tracklet);
+		int exp_id = fit2d_prop(det_id, tracklet);
     
     //double z_exp = p_geomSvc->getPlanePosition(det_id);
     //double x_exp = tracklet->getExpPositionX(z_exp);
