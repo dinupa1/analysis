@@ -229,6 +229,83 @@ int AnaModule::fit_prop(int det_id, Tracklet* tracklet)
   return -1;
 }
 
+int AnaModule::fit2d_prop(int det_id, Tracklet* tracklet)
+{
+  std::vector<int> track3 = {19, 21, 22, 51, 52, 53, 54};
+  
+  TGraph2DErrors* gg = new TGraph2DErrors();
+
+  int ndet = track3.size();
+  
+  double zz0;
+  double xx0;
+  double yy0;
+  double exx0;
+  double eyy0;
+
+  for(int i = 0; i < ndet; i++)
+  {
+    zz0 = p_geomSvc->getPlanePosition(track3.at(i));
+    xx0 = tracklet->getExpPositionX(zz0);
+    yy0 = tracklet->getExpPositionY(zz0);
+    exx0 = tracklet->getExpPosErrorX(zz0);
+    eyy0 = tracklet->getExpPosErrorY(zz0);
+    
+    if(i > 50)
+    {
+      int nhits = hitVector->size();
+      
+      for(int j = 0; j < nhits; j++)
+      {
+        
+        SQHit* hit = hitVector->at(j);
+        
+        if(hit->get_detector_id() == i)
+        {
+          zz0 = hit->get_truth_z();
+          xx0 = hit->get_truth_y();
+          yy0 = hit->get_truth_x();
+          exx0 = 0.;
+          eyy0 = 0.;
+        }
+      
+      }
+    }
+    
+    // set points
+    gg->SetPoint(i, zz0, yy0, xx0);
+    gg->SetPointError(i, 0.0, eyy0, exx0);
+
+    //std::cout << "det : " << track3.at(i) << " x : " << xx0 << " y : " << yy0 << " z : " << zz0 << " ex :" << exx0 << " ey : " << eyy0 << std::endl;
+  }
+  
+  // fit function
+  
+  TF2* ff = new TF2("ff", "[0]* x +[1]* y + [2]");
+  
+  gg->Fit("ff");
+  
+  double axx = ff->GetParameter(0);
+  double ayy = ff->GetParameter(1);
+  
+  double zz1 = p_geomSvc->getPlanePosition(det_id);
+  double zzp = p_geomSvc->getPlanePosition(21);
+  double xxp = tracklet->getExpPositionX(zzp);
+  double yyp = tracklet->getExpPositionX(zzp);
+  
+  double xx1 = xxp + axx* (zz1 - zzp);
+  double yy1 = yyp + ayy* (zz1 - zzp);
+  
+
+  if(p_geomSvc->isInPlane(det_id, xx1, yy1))
+  {
+    double pos = p_geomSvc->getCostheta(det_id)*xx1 + p_geomSvc->getSintheta(det_id)*yy1;
+    return p_geomSvc->getExpElementID(det_id, pos);
+  }
+  
+  return -1;
+}
+
 void AnaModule::effi_h4(Tracklet* tracklet)
 {
   // only NIM4 events are considered

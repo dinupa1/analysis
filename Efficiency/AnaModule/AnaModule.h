@@ -40,6 +40,7 @@ private:
   int GetNodes(PHCompositeNode* topNode);
   void MakeTree();
   int fit_prop(int det_id, Tracklet* tracklet);
+  int fit2d_prop(int det_id, Tracklet* tracklet);
   void effi_h4(Tracklet* tracklet);
   bool acc_h4(Tracklet* tracklet);
 
