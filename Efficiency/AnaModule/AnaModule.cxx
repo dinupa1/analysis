@@ -49,7 +49,7 @@ int AnaModule::process_event(PHCompositeNode* topNode)
 
     //very loose cuts here
     if(nHits < 9) continue;
-    if(chisq > 20.) continue;
+    if(chisq > 10.) continue;
 
     effi_h4(tracklet);
 
