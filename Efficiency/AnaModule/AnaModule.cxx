@@ -34,32 +34,7 @@ int AnaModule::InitRun(PHCompositeNode* topNode)
 
 int AnaModule::process_event(PHCompositeNode* topNode)
 {
-  int nTracklets = trackletVec->size();
-  for(int i = 0; i < nTracklets; ++i)
-  {
-    Tracklet* tracklet = trackletVec->at(i);
-    nHits = tracklet->getNHits();
-    chisq = tracklet->getChisq();
-    
-    // get only acctepted NIM4 || MATRIX5 events
-    // beam like and reverse beam like
-    if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
-    //if(!event->get_trigger(SQEvent::NIM4)) continue;
-    if(!acc_h4(tracklet)) continue;
-
-    //very loose cuts here
-    if(nHits < 9) continue;
-    if(chisq > 10.) continue;
-
-    effi_h4(tracklet);
-
-    saveTree->Fill();
-
-    detectorID.clear();
-    elementID_exp.clear();
-    elementID_closest.clear();
-  }
-
+	fill_h4();
   ++eventID;
   return Fun4AllReturnCodes::EVENT_OK;
 }
@@ -280,6 +255,38 @@ int AnaModule::fit2d_prop(int det_id, Tracklet* tracklet)
   return -1;
 }
 
+
+// accept event for H4 : an event should have hits in all 4 hodo. planes
+bool AnaModule::acc_h4(Tracklet* tracklet)
+{
+  int hodoId[6] = {41, 42, 43, 44, 45, 46};
+  
+  std::vector<int> acc_mask;
+  
+  int nhits = hitVector->size();
+  
+  for(int i = 0; i < nhits; i++)
+  {
+    for(int j = 0; j < 6; j++)
+    {
+      SQHit* hit = hitVector->at(i);
+      
+      //if(!(tracklet->get_track_id() == hit->get_track_id())) continue;
+      
+      if(hit->get_detector_id() == hodoId[j])
+      {
+        acc_mask.push_back(hit->get_detector_id());
+      }
+    }
+  }
+  
+  int mask_hits = acc_mask.size();
+  
+  if(mask_hits != 6){return false;}
+  return true;
+}
+
+
 void AnaModule::effi_h4(Tracklet* tracklet)
 {
   // only NIM4 events are considered
@@ -310,33 +317,31 @@ void AnaModule::effi_h4(Tracklet* tracklet)
   }
 }
 
-
-// accept event for H4 : an event should have hits in all 4 hodo. planes
-bool AnaModule::acc_h4(Tracklet* tracklet)
+void AnaModule::fill_h4()
 {
-  int hodoId[6] = {41, 42, 43, 44, 45, 46};
-  
-  std::vector<int> acc_mask;
-  
-  int nhits = hitVector->size();
-  
-  for(int i = 0; i < nhits; i++)
-  {
-    for(int j = 0; j < 6; j++)
-    {
-      SQHit* hit = hitVector->at(i);
-      
-      //if(!(tracklet->get_track_id() == hit->get_track_id())) continue;
-      
-      if(hit->get_detector_id() == hodoId[j])
-      {
-        acc_mask.push_back(hit->get_detector_id());
-      }
-    }
+	int nTracklets = trackletVec->size();
+	for(int i = 0; i < nTracklets; ++i)
+	{
+		Tracklet* tracklet = trackletVec->at(i);
+    nHits = tracklet->getNHits();
+    chisq = tracklet->getChisq();
+    
+    // get only acctepted NIM4 || MATRIX5 events
+    // beam like and reverse beam like
+    if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
+    //if(!event->get_trigger(SQEvent::NIM4)) continue;
+    if(!acc_h4(tracklet)) continue;
+
+    //very loose cuts here
+    if(nHits < 9) continue;
+    if(chisq > 10.) continue;
+
+    effi_h4(tracklet);
+
+    saveTree->Fill();
+
+    detectorID.clear();
+    elementID_exp.clear();
+    elementID_closest.clear();
   }
-  
-  int mask_hits = acc_mask.size();
-  
-  if(mask_hits != 6){return false;}
-  return true;
 }

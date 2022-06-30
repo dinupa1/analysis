@@ -43,6 +43,7 @@ private:
   int fit2d_prop(int det_id, Tracklet* tracklet);
   void effi_h4(Tracklet* tracklet);
   bool acc_h4(Tracklet* tracklet);
+	void fill_h4();
 
   SQHit* findHit(int detectorID, int elementID);
   std::set<int> detectorIDs;
