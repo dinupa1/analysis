@@ -326,13 +326,13 @@ void AnaModule::effi_h4(Tracklet* tracklet)
   }
 }
 
-void AnaModule::hodo2D(Tracklet* tracklet)
+void AnaModule::hodo24(Tracklet* tracklet)
 {
-	std::vector<int> hodo24 = {37, 46};
-	int nhodo24 = hodo24.size();
+	std::vector<int> vec24 = {37, 46};
+	int nhodo24 = vec24.size();
 	for(int i = 0; i <  nhodo24; i++)
 	{
-		hodoid = hodo24.at(i);
+		hodoid = vec24.at(i);
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
 		double x_exp = tracklet->getExpPositionX(z_exp);
 		double y_exp = tracklet->getExpPositionY(z_exp);
@@ -363,6 +363,6 @@ void AnaModule::fill_h4()
     if(chisq > 10.) continue;
 
     effi_h4(tracklet);
-		hodo2D(tracklet);
+		hodo24(tracklet);
   }
 }

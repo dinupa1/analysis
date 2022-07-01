@@ -44,6 +44,7 @@ private:
   void effi_h4(Tracklet* tracklet);
   bool acc_h4(Tracklet* tracklet);
 	void fill_h4();
+	void hodo24(Tracklet* tracklet);
 
   SQHit* findHit(int detectorID, int elementID);
   std::set<int> detectorIDs;
@@ -66,6 +67,9 @@ private:
   std::vector<int> elementID_closest;
   int nHits;
   double chisq;
+
+	// fro debugging
+	std::vector<int> ele24;
 };
 
 #endif
