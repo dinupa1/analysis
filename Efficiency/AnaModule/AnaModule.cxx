@@ -79,6 +79,8 @@ void AnaModule::MakeTree()
   saveTree->Branch("elementID_closest", &elementID_closest);
   saveTree->Branch("nHits", &nHits, "nHits/I");
   saveTree->Branch("chisq", &chisq, "chisq/D");
+	//for debugging only
+	saveTree->Branch("ele24", &ele24);
 }
 
 SQHit* AnaModule::findHit(int detID, int eleID)
@@ -297,8 +299,7 @@ bool AnaModule::acc_h4(Tracklet* tracklet)
 void AnaModule::effi_h4(Tracklet* tracklet)
 {
   // only NIM4 events are considered
-  //std::vector<int> hodo4 = {41, 42, 43, 44, 45, 46};
-	std::vector<int> hodo4 = {37, 41, 42, 43, 44, 45, 46};
+  std::vector<int> hodo4 = {41, 42, 43, 44, 45, 46};
   int nhodo = hodo4.size();
   for(int i = 0; i < nhodo; i++)
   {
@@ -325,6 +326,22 @@ void AnaModule::effi_h4(Tracklet* tracklet)
   }
 }
 
+void AnaModule::hodo2D(Tracklet* tracklet)
+{
+	std::vector<int> hodo24 = {37, 46};
+	int nhodo24 = hodo24.size();
+	for(int i = 0; i <  nhodo24; i++)
+	{
+		hodoid = hodo24.at(i);
+		double z_exp = p_geomSvc->getPlanePosition(hodoid);
+		double x_exp = tracklet->getExpPositionX(z_exp);
+		double y_exp = tracklet->getExpPositionY(z_exp);
+		if(!p_geomSvc->isInPlane(detectorID, x_exp, y_exp)) continue;
+		int id24 = p_geomSvc->getExpElementID(detectorID, tracklet->getExpPositionW(detectorID));
+		ele24.push_back(id24);
+	}
+}
+
 void AnaModule::fill_h4()
 {
 	int nTracklets = trackletVec->size();
@@ -346,6 +363,6 @@ void AnaModule::fill_h4()
     if(chisq > 10.) continue;
 
     effi_h4(tracklet);
-
+		hodo2D(tracklet);
   }
 }
