@@ -332,7 +332,7 @@ void AnaModule::hodo24(Tracklet* tracklet)
 	int nhodo24 = vec24.size();
 	for(int i = 0; i <  nhodo24; i++)
 	{
-		hodoid = vec24.at(i);
+		int hodoid = vec24.at(i);
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
 		double x_exp = tracklet->getExpPositionX(z_exp);
 		double y_exp = tracklet->getExpPositionY(z_exp);
