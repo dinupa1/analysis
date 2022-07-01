@@ -336,8 +336,8 @@ void AnaModule::hodo24(Tracklet* tracklet)
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
 		double x_exp = tracklet->getExpPositionX(z_exp);
 		double y_exp = tracklet->getExpPositionY(z_exp);
-		if(!p_geomSvc->isInPlane(detectorID, x_exp, y_exp)) continue;
-		int id24 = p_geomSvc->getExpElementID(detectorID, tracklet->getExpPositionW(detectorID));
+		if(!p_geomSvc->isInPlane(hodoid, x_exp, y_exp)) continue;
+		int id24 = p_geomSvc->getExpElementID(hodoid, tracklet->getExpPositionW(hodoid));
 		ele24.push_back(id24);
 	}
 }
