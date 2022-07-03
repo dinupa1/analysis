@@ -1,0 +1,264 @@
+ \documentclass[10pt, xcolor={dvipsnames}, aspectratio = 169]{beamer}
+%\usetheme{Berlin}
+\usefonttheme{serif}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{mathrsfs}
+%\usepackage{tikz}
+%\usetikzlibrary{shapes.geometric, arrows}
+\usepackage[font=tiny]{caption}
+%\usepackage{mathrsfs}
+\usepackage[style=science]{biblatex}
+%\usepackage{standalone}
+
+%\bibliography{ref}
+
+\mode<presentation>
+{
+	\setbeamercolor{frametitle}{fg=White, bg=MidnightBlue}
+	\setbeamercolor{title}{fg=White, bg=MidnightBlue}
+	\setbeamercolor{background canvas}{bg=White}
+	\setbeamercolor{section number projected}{bg=White, fg=MidnightBlue}
+	\setbeamercolor{subsection number projected}{bg=White, fg=MidnightBlue}
+	\setbeamertemplate{items}{\color{MidnightBlue}$\blacksquare$}
+	\setbeamercolor{text}{fg=MidnightBlue}
+	\setbeamertemplate{footline}[frame number]
+	\setbeamertemplate{caption}[numbered]
+}
+
+\title{2D Fit with Prop. Tube}
+\author{Dinupa}
+
+\begin{document}
+
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+
+%% slide 1
+\begin{frame}[fragile]
+
+\begin{textblock}{7.0}(0.5, 0.5)
+\begin{figure}
+\centering
+\includegraphics[width=7.0cm]{../../kefficiency/dummy/Efficiency/nhits.png}
+%\caption{Number of hits in the reco. track.}
+\end{figure}
+\end{textblock}
+
+\begin{textblock}{7.0}(8.0, 0.5)
+\begin{figure}
+\centering
+\includegraphics[width=7.0cm]{../../kefficiency/dummy/Efficiency/chisq.png}
+%\caption{$\chi^{2}$ of hits in the reco. track.}
+\end{figure}
+\end{textblock}
+
+\begin{textblock}{10.0}(0.5, 13.)
+\begin{itemize}
+
+	\item We only consider the back partial tracks.
+	%\item \verb|NIM4| and \verb|FPGA5| trigger was considered.
+	\item \verb|FPGA5| trigger was considered.
+\end{itemize}
+\end{textblock}
+
+\end{frame}
+
+
+%% slide 2
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi_45.png}
+\caption{H4B}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi1_45.png}
+\caption{H4B}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi2_45.png}
+\caption{H4B}
+\end{figure}
+
+\end{frame}
+
+%% slide 5
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi_46.png}
+\caption{H4T}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi1_46.png}
+\caption{H4T}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi2_46.png}
+\caption{H4T}
+\end{figure}
+
+\end{frame}
+
+%% slide 6
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi_41.png}
+\caption{H4Y1L}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi1_41.png}
+\caption{H4Y1L}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi2_41.png}
+\caption{H4Y1L}
+\end{figure}
+
+\end{frame}
+
+%% slide 7
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi_42.png}
+\caption{H4Y1R}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi1_42.png}
+\caption{H4Y1R}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi2_42.png}
+\caption{H4Y1R}
+\end{figure}
+
+\end{frame}
+
+%% slide 8
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi_43.png}
+\caption{H4Y2L}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi1_43.png}
+\caption{H4Y2L}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi2_43.png}
+\caption{H4Y2L}
+\end{figure}
+
+\end{frame}
+
+%% slide 9
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi_44.png}
+\caption{H4Y2R}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi1_44.png}
+\caption{H4Y2R}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{figure}
+\centering
+\includegraphics[width=15.0cm]{../../kefficiency/dummy/Efficiency/effi2_44.png}
+\caption{H4Y2R}
+\end{figure}
+
+\end{frame}
+\end{document}
