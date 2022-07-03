@@ -63,7 +63,7 @@ class model
 
 model::model()
 {
-	file = TFile::Open("ana.root", "READ");
+	file = TFile::Open("../ana.root", "READ");
 	tree = (TTree*)file->Get("save");
 	nevents = tree->GetEntries();
 
@@ -242,7 +242,7 @@ void model::print(TEfficiency* e0, TH1D* h0)
 	
 	can->Draw();
 	
-	TString cname = Form("%s.png", e0->GetName());
+	TString cname = Form("../pics/%s.png", e0->GetName());
 	can->Print(cname.Data());
 }
 
@@ -253,18 +253,18 @@ void model::done()
 	hnhits->Draw();
 	c1->Update();
 	c1->Draw();
-	c1->Print("nhits.png");
+	c1->Print("../pics/nhits.png");
 
 	hchisq->SetFillColor(kAzure+10);
 	hchisq->Draw();
 	c1->Update();
 	c1->Draw();
-	c1->Print("chisq.png");
+	c1->Print("../pics/chisq.png");
 
 	hele24->Draw("COLZ");
 	c1->Update();
 	c1->Draw();
-	c1->Print("ele24.png");
+	c1->Print("../pics/ele24.png");
 
 	int neffi = effi.size();
 	for(int i = 0; i < neffi; i++)
