@@ -103,7 +103,7 @@ void model::plane_effi(int id)
 		hnhits->Fill(nHits);
 		hchisq->Fill(chisq);
 
-		hele24->Fill(ele24->at(0), ele24->at(1));
+		//hele24->Fill(ele24->at(0), ele24->at(1));
 		
 		int ndet = detectorID->size();
 
