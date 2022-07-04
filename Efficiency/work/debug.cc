@@ -19,6 +19,6 @@ void debug()
 		int id = hodoid.at(i);
 		m->set_det(id);
 	}
-	//m->ana();
-	///m->done();
+	m->ana();
+	m->done();
 }
