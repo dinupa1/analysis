@@ -356,8 +356,11 @@ void AnaModule::fill_h4()
     if(nHits < 9) continue;
     if(chisq > 10.) continue;
 
-    effi_h4(tracklet);
 		hodo24(tracklet);
+
+		if(ele24.size() == 2) continue;
+
+    effi_h4(tracklet);
 		
 		saveTree->Fill();
 		
