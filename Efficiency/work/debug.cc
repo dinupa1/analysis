@@ -7,8 +7,8 @@ using namespace std;
 void debug()
 {	
 	// set hodo ids
-	vector<int> hodo = {41, 42, 43, 44, 45, 46};
-	int nhodo = hodo.size();
+	vector<int> hodoid = {41, 42, 43, 44, 45, 46};
+	int nhodo = hodoid.size();
 
 	//cout << nhodo << endl;
 
@@ -16,8 +16,8 @@ void debug()
 	model* m = new model();	
 	for(int i = 0; i < nhodo; i++)
 	{
-		m->set_det(hodo.at(i));
-		cout << hodo.at(i) << endl;
+		m->set_det(hodoid.at(i));
+		cout << hodoid.at(i) << endl;
 	}
 	m->ana();
 	m->done();
