@@ -36,12 +36,6 @@ int AnaModule::process_event(PHCompositeNode* topNode)
 {
 	fill_h4();
 	
-	saveTree->Fill();
-	
-	detectorID.clear();
-	elementID_exp.clear();
-	elementID_closest.clear();
-
   ++eventID;
   return Fun4AllReturnCodes::EVENT_OK;
 }
@@ -364,5 +358,11 @@ void AnaModule::fill_h4()
 
     effi_h4(tracklet);
 		hodo24(tracklet);
+		
+		saveTree->Fill();
+		
+		detectorID.clear();
+		elementID_exp.clear();
+		elementID_closest.clear();
   }
 }
