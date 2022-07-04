@@ -364,5 +364,6 @@ void AnaModule::fill_h4()
 		detectorID.clear();
 		elementID_exp.clear();
 		elementID_closest.clear();
+		ele24.clear();
   }
 }
