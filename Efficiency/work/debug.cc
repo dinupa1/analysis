@@ -12,7 +12,10 @@ void debug()
 
 	// do ana
 	model* m = new model();	
-	for(int i = 0; i < nhodo; i++){m->set_det(hodo.at(i));}
+	for(int i = 0; i < nhodo; i++)
+	{
+		m->set_det(hodo.at(i));
+	}
 	m->ana();
 	m->done();
 }
