@@ -358,7 +358,7 @@ void AnaModule::fill_h4()
 
 		hodo24(tracklet);
 
-		if(ele24.size() == 2) continue;
+		if(ele24.size() != 2) continue;
 
     effi_h4(tracklet);
 		
