@@ -104,6 +104,7 @@ void model::plane_effi(int id)
 		hchisq->Fill(chisq);
 
 		//hele24->Fill(ele24->at(0), ele24->at(1));
+		cout << ele24->size() << endl;
 		
 		int ndet = detectorID->size();
 
