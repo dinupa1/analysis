@@ -47,7 +47,7 @@ class model
 
 		TH1D* hnhits = new TH1D("hnhits", "; nhits; counts", 20, 0.0, 20.0);
 		TH1D* hchisq = new TH1D("hchisq", "; chisq; counts", 20, 0.0, 20.0);
-		TH2D* hele24 = new TH2D("hele24", "; ele_id(H2B); ele_id(H4T)", 16, 0.5, 16.5)
+		TH2D* hele24 = new TH2D("hele24", "; ele_id(H2B); ele_id(H4T)", 16, 0.5, 16.5, 16, 0.5, 16.5);
 
 
 		TCanvas* can;
