@@ -20,5 +20,5 @@ void debug()
 		m->set_det(id);
 	}
 	m->ana();
-	m->done();
+	//m->done();
 }
