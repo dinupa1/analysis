@@ -16,8 +16,8 @@ void debug()
 	model* m = new model();	
 	for(int i = 0; i < nhodo; i++)
 	{
-		//m->set_det(hodoid.at(i));
-		cout << hodoid.at(i) << endl;
+		int id = hodoid.at(i);
+		m->set_det(id);
 	}
 	//m->ana();
 	///m->done();
