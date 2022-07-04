@@ -19,6 +19,6 @@ void debug()
 		//m->set_det(hodoid.at(i));
 		cout << hodoid.at(i) << endl;
 	}
-	m->ana();
-	m->done();
+	//m->ana();
+	///m->done();
 }
