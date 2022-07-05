@@ -41,10 +41,11 @@ private:
   void MakeTree();
   int fit_prop(int det_id, Tracklet* tracklet);
   int fit2d_prop(int det_id, Tracklet* tracklet);
-  void effi_h4(Tracklet* tracklet);
+  void effi_h4();
   bool acc_h4(Tracklet* tracklet);
-	void fill_h4();
-	void hodo24(Tracklet* tracklet);
+//	void fill_h4();
+	void hodo24();
+	void hodo42();
 
   SQHit* findHit(int detectorID, int elementID);
   std::set<int> detectorIDs;
@@ -70,6 +71,7 @@ private:
 
 	// fro debugging
 	std::vector<int> ele24;
+	std::vector<int> ele42;
 };
 
 #endif

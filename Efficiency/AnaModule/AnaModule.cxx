@@ -34,8 +34,18 @@ int AnaModule::InitRun(PHCompositeNode* topNode)
 
 int AnaModule::process_event(PHCompositeNode* topNode)
 {
-	fill_h4();
+	effi_h4();
+	hodo24();
+	hodo42();
 	
+	saveTree->Fill();
+	
+	detectorID.clear();
+	elementID_exp.clear();
+	elementID_closest.clear();
+	ele24.clear();
+	ele42.clear();
+
   ++eventID;
   return Fun4AllReturnCodes::EVENT_OK;
 }
@@ -75,6 +85,7 @@ void AnaModule::MakeTree()
   saveTree->Branch("chisq", &chisq, "chisq/D");
 	//for debugging only
 	saveTree->Branch("ele24", &ele24);
+	saveTree->Branch("ele42", &ele42);
 }
 
 SQHit* AnaModule::findHit(int detID, int eleID)
@@ -290,54 +301,65 @@ bool AnaModule::acc_h4(Tracklet* tracklet)
 }
 
 
-void AnaModule::effi_h4(Tracklet* tracklet)
+void AnaModule::effi_h4()
 {
   // only NIM4 events are considered
   std::vector<int> hodo4 = {41, 42, 43, 44, 45, 46};
   int nhodo = hodo4.size();
-  for(int i = 0; i < nhodo; i++)
-  {
-    int det_id = hodo4.at(i);
-    int exp_id = fit_prop(det_id, tracklet);
-		//int exp_id = fit2d_prop(det_id, tracklet);
-    
-    //double z_exp = p_geomSvc->getPlanePosition(det_id);
-    //double x_exp = tracklet->getExpPositionX(z_exp);
-    //double y_exp = tracklet->getExpPositionY(z_exp);
-    
-    //if(!p_geomSvc->isInPlane(det_id, x_exp, y_exp)) continue;
-    
-    //int exp_id = p_geomSvc->getExpElementID(det_id, tracklet->getExpPositionW(det_id));
-    
-    if(exp_id < 1 || exp_id > p_geomSvc->getPlaneNElements(det_id)) continue;
-    
-    SQHit* hit = findHit(det_id, exp_id);
-    int close_id = hit == nullptr ? -1 : hit->get_element_id();
-    
-    detectorID.push_back(det_id);
-    elementID_exp.push_back(exp_id);
-    elementID_closest.push_back(close_id);
-  }
-}
-
-void AnaModule::hodo24(Tracklet* tracklet)
-{
-	std::vector<int> vec24 = {37, 46};
-	int nhodo24 = vec24.size();
-	for(int i = 0; i <  nhodo24; i++)
+	
+	int nTracklets = trackletVec->size();
+	for(int i = 0; i < nTracklets; ++i)
 	{
-		int hodoid = vec24.at(i);
-		double z_exp = p_geomSvc->getPlanePosition(hodoid);
-		double x_exp = tracklet->getExpPositionX(z_exp);
-		double y_exp = tracklet->getExpPositionY(z_exp);
-		if(!p_geomSvc->isInPlane(hodoid, x_exp, y_exp)) continue;
-		int id24 = p_geomSvc->getExpElementID(hodoid, tracklet->getExpPositionW(hodoid));
-		ele24.push_back(id24);
+		Tracklet* tracklet = trackletVec->at(i);
+		nHits = tracklet->getNHits();
+		chisq = tracklet->getChisq();
+		
+		// get only acctepted NIM4 || MATRIX5 events
+		// beam like and reverse beam like
+    //if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
+    //if(!event->get_trigger(SQEvent::NIM4)) continue;
+		if(!event->get_trigger(SQEvent::MATRIX5)) continue;
+
+    if(!acc_h4(tracklet)) continue;
+
+    //very loose cuts here
+    if(nHits < 9) continue;
+    if(chisq > 10.) continue;
+		
+		for(int j = 0; j < nhodo; j++)
+		{
+			int det_id = hodo4.at(j);
+			int exp_id = fit_prop(det_id, tracklet);
+			
+			//int exp_id = fit2d_prop(det_id, tracklet);
+
+			//double z_exp = p_geomSvc->getPlanePosition(det_id);
+			//double x_exp = tracklet->getExpPositionX(z_exp);
+			//double y_exp = tracklet->getExpPositionY(z_exp);
+
+			//if(!p_geomSvc->isInPlane(det_id, x_exp, y_exp)) continue;
+			
+			//int exp_id = p_geomSvc->getExpElementID(det_id, tracklet->getExpPositionW(det_id));
+
+
+			if(exp_id < 1 || exp_id > p_geomSvc->getPlaneNElements(det_id)) continue;
+			
+			SQHit* hit = findHit(det_id, exp_id);
+			int close_id = hit == nullptr ? -1 : hit->get_element_id();
+			
+			detectorID.push_back(det_id);
+			elementID_exp.push_back(exp_id);
+			elementID_closest.push_back(close_id);
+		}
 	}
 }
 
-void AnaModule::fill_h4()
+void AnaModule::hodo42()
 {
+	std::vector<int> vec42 = {35, 36, 43, 44};
+	int nhodo42 = vec42.size();
+
+
 	int nTracklets = trackletVec->size();
 	for(int i = 0; i < nTracklets; ++i)
 	{
@@ -350,23 +372,62 @@ void AnaModule::fill_h4()
     //if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
     //if(!event->get_trigger(SQEvent::NIM4)) continue;
 		if(!event->get_trigger(SQEvent::MATRIX5)) continue;
-    if(!acc_h4(tracklet)) continue;
+    
+		if(!acc_h4(tracklet)) continue;
 
     //very loose cuts here
     if(nHits < 9) continue;
     if(chisq > 10.) continue;
-
-		hodo24(tracklet);
-
-		//if(ele24.size() != 2) continue;
-
-    effi_h4(tracklet);
 		
-		saveTree->Fill();
-		
-		detectorID.clear();
-		elementID_exp.clear();
-		elementID_closest.clear();
-		ele24.clear();
-  }
+		for(int j = 0; j <  nhodo42; j++)
+		{
+			int hodoid = vec42.at(j);
+			double z_exp = p_geomSvc->getPlanePosition(hodoid);
+			double x_exp = tracklet->getExpPositionX(z_exp);
+			double y_exp = tracklet->getExpPositionY(z_exp);
+			if(!p_geomSvc->isInPlane(hodoid, x_exp, y_exp)) continue;
+			int id42 = p_geomSvc->getExpElementID(hodoid, tracklet->getExpPositionW(hodoid));
+			ele42.push_back(id42);
+		}
+	}
 }
+
+
+void AnaModule::hodo24()
+{
+	std::vector<int> vec24 = {35, 36, 43, 44}};
+	int nhodo24 = vec24.size();
+
+
+	int nTracklets = trackletVec->size();
+	for(int i = 0; i < nTracklets; ++i)
+	{
+		Tracklet* tracklet = trackletVec->at(i);
+    nHits = tracklet->getNHits();
+    chisq = tracklet->getChisq();
+    
+    // get only acctepted NIM4 || MATRIX5 events
+    // beam like and reverse beam like
+    //if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
+    if(!event->get_trigger(SQEvent::NIM4)) continue;
+		//if(!event->get_trigger(SQEvent::MATRIX5)) continue;
+    
+		if(!acc_h4(tracklet)) continue;
+
+    //very loose cuts here
+    if(nHits < 9) continue;
+    if(chisq > 10.) continue;
+		
+		for(int j = 0; j <  nhodo24; j++)
+		{
+			int hodoid = vec24.at(j);
+			double z_exp = p_geomSvc->getPlanePosition(hodoid);
+			double x_exp = tracklet->getExpPositionX(z_exp);
+			double y_exp = tracklet->getExpPositionY(z_exp);
+			if(!p_geomSvc->isInPlane(hodoid, x_exp, y_exp)) continue;
+			int id24 = p_geomSvc->getExpElementID(hodoid, tracklet->getExpPositionW(hodoid));
+			ele24.push_back(id24);
+		}
+	}
+}
+
