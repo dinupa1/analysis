@@ -315,20 +315,19 @@ bool AnaModule::acc_h4(Tracklet* tracklet)
 
 void AnaModule::effi_h4(Tracklet* tracklet)
 {
-  // only NIM4 events are considered
   std::vector<int> hodo4 = {41, 42, 43, 44, 45, 46};
   int nhodo = hodo4.size();
-	
-	// get only acctepted NIM4 || MATRIX5 events
-	// beam like and reverse beam like
-	//if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
-	//if(!event->get_trigger(SQEvent::NIM4)) continue;
-	if(!event->get_trigger(SQEvent::MATRIX5)) continue;
-	
-	if(!acc_h4(tracklet)) continue;
-	
+		
 	for(int j = 0; j < nhodo; j++)
 	{
+		// get only acctepted NIM4 || MATRIX5 events
+		// beam like and reverse beam like
+		//if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
+		if(!event->get_trigger(SQEvent::NIM4)) continue;
+		//if(!event->get_trigger(SQEvent::MATRIX5)) continue;
+
+		if(!acc_h4(tracklet)) continue;
+
 		int det_id = hodo4.at(j);
 		int exp_id = fit_prop(det_id, tracklet);
 		
@@ -349,7 +348,7 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 		detectorID.push_back(det_id);
 		elementID_exp.push_back(exp_id);
 		elementID_closest.push_back(close_id);
-		}
+	}
 }
 
 
@@ -357,17 +356,17 @@ void AnaModule::hodo42(Tracklet* tracklet)
 {
 	std::vector<int> vec42 = {35, 36, 43, 44};
 	int nhodo42 = vec42.size();
-	
-	// get only acctepted NIM4 || MATRIX5 events
-	// beam like and reverse beam like
-	//if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
-	//if(!event->get_trigger(SQEvent::NIM4)) continue;
-	if(!event->get_trigger(SQEvent::MATRIX5)) continue;
-	
-	if(!acc_h4(tracklet)) continue;
-	
+		
 	for(int j = 0; j <  nhodo42; j++)
 	{
+		// get only acctepted NIM4 || MATRIX5 events
+		// beam like and reverse beam like
+		//if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
+		//if(!event->get_trigger(SQEvent::NIM4)) continue;
+		if(!event->get_trigger(SQEvent::MATRIX5)) continue;
+
+		if(!acc_h4(tracklet)) continue;
+
 		int hodoid = vec42.at(j);
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
 		double x_exp = tracklet->getExpPositionX(z_exp);
@@ -383,17 +382,17 @@ void AnaModule::hodo24(Tracklet* tracklet)
 {
 	std::vector<int> vec24 = {35, 36, 43, 44};
 	int nhodo24 = vec24.size();
-	
-	// get only acctepted NIM4 || MATRIX5 events
-	// beam like and reverse beam like
-	//if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
-	if(!event->get_trigger(SQEvent::NIM4)) continue;
-	//if(!event->get_trigger(SQEvent::MATRIX5)) continue;
-	
-	if(!acc_h4(tracklet)) continue;
-	
+		
 	for(int j = 0; j <  nhodo24; j++)
 	{
+		// get only acctepted NIM4 || MATRIX5 events
+		// beam like and reverse beam like
+		//if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
+		if(!event->get_trigger(SQEvent::NIM4)) continue;
+		//if(!event->get_trigger(SQEvent::MATRIX5)) continue;
+
+		if(!acc_h4(tracklet)) continue;
+		
 		int hodoid = vec24.at(j);
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
 		double x_exp = tracklet->getExpPositionX(z_exp);
