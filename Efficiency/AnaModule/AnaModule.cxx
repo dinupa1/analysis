@@ -43,21 +43,21 @@ int AnaModule::process_event(PHCompositeNode* topNode)
 		
 		//very loose cuts here
 		if(nHits < 9) continue;
-		if(chisq > 20.) continue;
+		if(chisq > 10.) continue;
 		
 		effi_h4(tracklet);
 		hodo24(tracklet);
 		hodo42(tracklet);
+		
+		saveTree->Fill();
+		
+		detectorID.clear();
+		elementID_exp.clear();
+		elementID_closest.clear();
+		ele24.clear();
+		ele42.clear();
 	}
 	
-	saveTree->Fill();
-	
-	detectorID.clear();
-	elementID_exp.clear();
-	elementID_closest.clear();
-	ele24.clear();
-	ele42.clear();
-
   ++eventID;
   return Fun4AllReturnCodes::EVENT_OK;
 }
@@ -323,8 +323,8 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 		// get only acctepted NIM4 || MATRIX5 events
 		// beam like and reverse beam like
 		//if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
-		if(!event->get_trigger(SQEvent::NIM4)) continue;
-		//if(!event->get_trigger(SQEvent::MATRIX5)) continue;
+		//if(!event->get_trigger(SQEvent::NIM4)) continue;
+		if(!event->get_trigger(SQEvent::MATRIX5)) continue;
 
 		if(!acc_h4(tracklet)) continue;
 
