@@ -395,7 +395,7 @@ void AnaModule::hodo42()
 
 void AnaModule::hodo24()
 {
-	std::vector<int> vec24 = {35, 36, 43, 44}};
+	std::vector<int> vec24 = {35, 36, 43, 44};
 	int nhodo24 = vec24.size();
 
 
