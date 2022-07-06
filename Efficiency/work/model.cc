@@ -41,13 +41,15 @@ class model
 		vector<int>* elementID_exp = 0;
 		vector<int>* elementID_closest = 0;
 		vector<int>* ele24 = 0;
+		vector<int>* ele42 = 0;
 
 		int nHits;
 		double chisq;
 
 		TH1D* hnhits = new TH1D("hnhits", "; nhits; counts", 20, 0.0, 20.0);
 		TH1D* hchisq = new TH1D("hchisq", "; chisq; counts", 20, 0.0, 20.0);
-		TH2D* hele24 = new TH2D("hele24", "; ele_id(H2B); ele_id(H4T)", 16, 0.5, 16.5, 16, 0.5, 16.5);
+		TH2D* hele24 = new TH2D("hele24", "; ele_id(H2Y); ele_id(H4Y)", 16, 0.5, 16.5, 16, 0.5, 16.5);
+		TH2D* hele42 = new TH2D("hele42", "; ele_id(H2Y); ele_id(H4Y)", 16, 0.5, 16.5, 16, 0.5, 16.5);
 
 
 		TCanvas* can;
@@ -75,6 +77,7 @@ model::model()
 	tree->SetBranchAddress("nHits", &nHits);
 	tree->SetBranchAddress("chisq", &chisq);
 	tree->SetBranchAddress("ele24", &ele24);
+	tree->SetBranchAddress("ele42", &ele42);
 }
 
 void model::set_det(int id)
@@ -102,8 +105,10 @@ void model::plane_effi(int id)
 
 		hnhits->Fill(nHits);
 		hchisq->Fill(chisq);
-
+		// for debugging
 		if(ele24->size()==2){hele24->Fill(ele24->at(0), ele24->at(1));}
+		if(ele42->size()==2){hele42->Fill(ele42->at(0), ele42->at(1));}
+		
 		int ndet = detectorID->size();
 
 		for(int j = 0; j < ndet; j++)
@@ -260,10 +265,16 @@ void model::done()
 	c1->Draw();
 	c1->Print("../pics/chisq.png");
 
+	// for debugging only
 	hele24->Draw("COLZ");
 	c1->Update();
 	c1->Draw();
 	c1->Print("../pics/ele24.png");
+
+	hele42->Draw("COLZ");
+	c1->Update();
+	c1->Draw();
+	c1->Print("../pics/ele42.png");
 
 	int neffi = effi.size();
 	for(int i = 0; i < neffi; i++)
