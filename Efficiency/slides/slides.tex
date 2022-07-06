@@ -1,4 +1,4 @@
- \documentclass[10pt, xcolor={dvipsnames}, aspectratio = 169]{beamer}
+\documentclass[10pt, xcolor={dvipsnames}, aspectratio = 169]{beamer}
 %\usetheme{Berlin}
 \usefonttheme{serif}
 \usepackage{graphicx}
@@ -28,7 +28,7 @@
 	\setbeamertemplate{caption}[numbered]
 }
 
-\title{2D Fit with Prop. Tube}
+\title{Sanity Check}
 \author{Dinupa}
 
 \begin{document}
@@ -64,7 +64,7 @@
 
 	\item We only consider the back partial tracks.
 	%\item \verb|NIM4| and \verb|FPGA5| trigger was considered.
-	\item \verb|FPGA5| trigger was considered.
+	%\item \verb|FPGA5| trigger was considered.
 \end{itemize}
 \end{textblock}
 
@@ -79,14 +79,33 @@
 \includegraphics[width=7.0cm]{../pics/ele24.png}
 %\caption{Number of hits in the reco. track.}
 \end{figure}
+
+\begin{itemize}
+	\item Only \verb|NIM4| trigger was considered. This is beam like tracks. 
+\end{itemize}
+
 \end{textblock}
 
-\begin{textblock}{7.0}(8.0, 1.0)
+\begin{textblock}{7.0}(8.0, 0.5)
+\begin{figure}
+\centering
+\includegraphics[width=7.0cm]{../pics/ele42.png}
+%\caption{Number of hits in the reco. track.}
+\end{figure}
+
 \begin{itemize}
-\item For many events which has a hit in the \verb|H4T| plane, does not have a hit in the \verb|H2B| plane.
-\item Events with hits in both planes was considered in the 2D histogram.
+	\item Only \verb|FPGA5| trigger was considered. This is reverse beam like tracks. 
 \end{itemize}
+
 \end{textblock}
+
+
+%\begin{textblock}{7.0}(8.0, 1.0)
+%\begin{itemize}
+%\item For many events which has a hit in the \verb|H4T| plane, does not have a hit in the \verb|H2B| plane.
+%\item Events with hits in both planes was considered in the 2D histogram.
+%\end{itemize}
+%\end{textblock}
 
 \end{frame}
 
