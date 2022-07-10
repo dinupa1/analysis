@@ -342,7 +342,7 @@ bool AnaModule::acc_h4(int id)
 	}
 
 	if(nacc >= 2){return true;}
-	else false;
+	return false;
 }
 
 
