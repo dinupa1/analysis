@@ -284,7 +284,7 @@ int AnaModule::fit2d_prop(int det_id, Tracklet* tracklet)
 int AnaModule::acc_plane(std::vector<int> &vec)
 {
 	int nvec = vec.size();
-	int nhist = hitVector->size();
+	int nhits = hitVector->size();
 	std::vector<int> acc_mask;
 
 	for(int i = 0; i < nhits; i++)
@@ -341,7 +341,7 @@ bool AnaModule::acc_h4(int id)
 		nacc = acc_plane(acc46);
 	}
 
-	if(nacc >= 2){return ture;}
+	if(nacc >= 2){return true;}
 	else false;
 }
 
