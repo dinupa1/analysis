@@ -42,7 +42,8 @@ private:
   int fit_prop(int det_id, Tracklet* tracklet);
   int fit2d_prop(int det_id, Tracklet* tracklet);
   void effi_h4(Tracklet* tracklet);
-  bool acc_h4(Tracklet* tracklet);
+  bool acc_h4(int id);
+	int acc_plane(std::vector<int> &vec);
 //	void fill_h4();
 	void hodo24(Tracklet* tracklet);
 	void hodo42(Tracklet* tracklet);

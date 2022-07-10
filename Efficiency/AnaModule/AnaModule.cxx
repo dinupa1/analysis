@@ -281,35 +281,68 @@ int AnaModule::fit2d_prop(int det_id, Tracklet* tracklet)
   return -1;
 }
 
-
-// accept event for H4 : an event should have hits in all 4 hodo. planes
-bool AnaModule::acc_h4(Tracklet* tracklet)
+int AnaModule::acc_plane(std::vector<int> &vec)
 {
-  int hodoId[6] = {41, 42, 43, 44, 45, 46};
-  
-  std::vector<int> acc_mask;
-  
-  int nhits = hitVector->size();
-  
-  for(int i = 0; i < nhits; i++)
-  {
-    for(int j = 0; j < 6; j++)
-    {
-      SQHit* hit = hitVector->at(i);
-      
-      //if(!(tracklet->get_track_id() == hit->get_track_id())) continue;
-      
-      if(hit->get_detector_id() == hodoId[j])
-      {
-        acc_mask.push_back(hit->get_detector_id());
-      }
-    }
-  }
-  
-  int mask_hits = acc_mask.size();
-  
-  if(mask_hits != 6){return false;}
-  return true;
+	int nvec = vec.size();
+	int nhist = hitVector->size();
+	std::vector<int> acc_mask;
+
+	for(int i = 0; i < nhits; i++)
+	{
+		for(int j = 0; j < nvec; j++)
+		{
+			SQHit* hit = hitVector->at(i);
+			if(hit->get_detector_id() == vec.at(j)){acc_mask.push_back(hit->get_detector_id());}
+		}
+	}
+
+	int mask_hits = acc_mask.size();
+
+	return mask_hits;
+}
+
+// use only good tracks in the denominator
+bool AnaModule::acc_h4(int id)
+{
+	int nacc;
+	if(id == 41)
+	{
+		std::vector<int> acc41 = {39, 40, 43};
+		nacc = acc_plane(acc41);
+	}
+
+	if(id == 42)
+	{
+		std::vector<int> acc42 = {39, 40, 44};
+		nacc = acc_plane(acc42);
+	}
+
+	if(id == 43)
+	{
+		std::vector<int> acc43 = {41, 45,46};
+		nacc = acc_plane(acc43);
+	}
+
+	if(id == 44)
+	{
+		std::vector<int> acc44 = {42, 45, 46};
+		nacc = acc_plane(acc44);
+	}
+
+	if(id == 45)
+	{
+		std::vector<int> acc45 = {43, 44, 51, 52};
+		nacc = acc_plane(acc45);
+	}
+
+	if(id == 46)
+	{
+		std::vector<int> acc46 = {43, 44, 51, 52};
+		nacc = acc_plane(acc46);
+	}
+
+	if(nacc >= 2){return ture;}
+	else false;
 }
 
 
@@ -326,20 +359,21 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 		//if(!event->get_trigger(SQEvent::NIM4)) continue;
 		if(!event->get_trigger(SQEvent::MATRIX5)) continue;
 
-		if(!acc_h4(tracklet)) continue;
-
 		int det_id = hodo4.at(j);
-		int exp_id = fit_prop(det_id, tracklet);
+		if(!acc_h4(det_id)) continue;
 		
+		//int exp_id = fit_prop(det_id, tracklet);
 		//int exp_id = fit2d_prop(det_id, tracklet);
-		//double z_exp = p_geomSvc->getPlanePosition(det_id);
-		//double x_exp = tracklet->getExpPositionX(z_exp);
-		//double y_exp = tracklet->getExpPositionY(z_exp);
 		
-		//if(!p_geomSvc->isInPlane(det_id, x_exp, y_exp)) continue;
+
+		double z_exp = p_geomSvc->getPlanePosition(det_id);
+		double x_exp = tracklet->getExpPositionX(z_exp);
+		double y_exp = tracklet->getExpPositionY(z_exp);
+		
+		if(!p_geomSvc->isInPlane(det_id, x_exp, y_exp)) continue;
 
 
-		//int exp_id = p_geomSvc->getExpElementID(det_id, tracklet->getExpPositionW(det_id));
+		int exp_id = p_geomSvc->getExpElementID(det_id, tracklet->getExpPositionW(det_id));
 
 		if(exp_id < 1 || exp_id > p_geomSvc->getPlaneNElements(det_id)) continue;
 		
@@ -365,9 +399,10 @@ void AnaModule::hodo42(Tracklet* tracklet)
 		//if(!event->get_trigger(SQEvent::NIM4)) continue;
 		if(!event->get_trigger(SQEvent::MATRIX5)) continue;
 
-		if(!acc_h4(tracklet)) continue;
-
 		int hodoid = vec42.at(j);
+		if(!acc_h4(hodoid)) continue;
+
+
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
 		double x_exp = tracklet->getExpPositionX(z_exp);
 		double y_exp = tracklet->getExpPositionY(z_exp);
@@ -390,10 +425,11 @@ void AnaModule::hodo24(Tracklet* tracklet)
 		//if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
 		if(!event->get_trigger(SQEvent::NIM4)) continue;
 		//if(!event->get_trigger(SQEvent::MATRIX5)) continue;
-
-		if(!acc_h4(tracklet)) continue;
-		
+	
 		int hodoid = vec24.at(j);
+		if(!acc_h4(hodoid)) continue;
+
+
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
 		double x_exp = tracklet->getExpPositionX(z_exp);
 		double y_exp = tracklet->getExpPositionY(z_exp);
