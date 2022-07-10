@@ -355,9 +355,9 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 	{
 		// get only acctepted NIM4 || MATRIX5 events
 		// beam like and reverse beam like
-		//if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
+		if(!(event->get_trigger(SQEvent::NIM4)|| event->get_trigger(SQEvent::MATRIX5))) continue;
 		//if(!event->get_trigger(SQEvent::NIM4)) continue;
-		if(!event->get_trigger(SQEvent::MATRIX5)) continue;
+		//if(!event->get_trigger(SQEvent::MATRIX5)) continue;
 
 		int det_id = hodo4.at(j);
 		if(!acc_h4(det_id)) continue;
