@@ -309,39 +309,43 @@ bool AnaModule::acc_h4(int id)
 	{
 		std::vector<int> acc41 = {39, 40, 43};
 		nacc = acc_plane(acc41);
+		std::cout << "nacc : " << nacc << std::endl;
 	}
 
 	if(id == 42)
 	{
 		std::vector<int> acc42 = {39, 40, 44};
 		nacc = acc_plane(acc42);
+		std::cout << "nacc : " << nacc << std::endl;
 	}
 
 	if(id == 43)
 	{
 		std::vector<int> acc43 = {41, 45,46};
 		nacc = acc_plane(acc43);
+		std::cout << "nacc : " << nacc << std::endl;
 	}
 
 	if(id == 44)
 	{
 		std::vector<int> acc44 = {42, 45, 46};
 		nacc = acc_plane(acc44);
+		std::cout << "nacc : " << nacc << std::endl;
 	}
 
 	if(id == 45)
 	{
 		std::vector<int> acc45 = {43, 44, 51};
 		nacc = acc_plane(acc45);
+		std::cout << "nacc : " << nacc << std::endl;
 	}
 
 	if(id == 46)
 	{
 		std::vector<int> acc46 = {43, 44, 51};
 		nacc = acc_plane(acc46);
+		std::cout << "nacc : " << nacc << std::endl;
 	}
-
-	std::cout << "nacc : " << nacc << std::endl;
 
 	if(nacc >= 2){return true;}
 	return false;
