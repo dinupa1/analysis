@@ -331,13 +331,13 @@ bool AnaModule::acc_h4(int id)
 
 	if(id == 45)
 	{
-		std::vector<int> acc45 = {43, 44, 51, 52};
+		std::vector<int> acc45 = {43, 44, 51};
 		nacc = acc_plane(acc45);
 	}
 
 	if(id == 46)
 	{
-		std::vector<int> acc46 = {43, 44, 51, 52};
+		std::vector<int> acc46 = {43, 44, 51};
 		nacc = acc_plane(acc46);
 	}
 
