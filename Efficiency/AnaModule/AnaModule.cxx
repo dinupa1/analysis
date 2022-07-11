@@ -348,7 +348,7 @@ bool AnaModule::acc_h4(int id)
 		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
-	if(nacc == 2){return true;}
+	if(nacc >= 2){return true;}
 	return false;
 }
 
