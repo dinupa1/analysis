@@ -285,7 +285,7 @@ int AnaModule::acc_plane(std::vector<int> &vec)
 {
 	int nvec = vec.size();
 	int nhits = hitVector->size();
-	std::vector<int> acc_mask;
+	std::vector<int> acc_mask = 0;
 
 	for(int i = 0; i < nhits; i++)
 	{
