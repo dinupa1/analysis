@@ -362,6 +362,7 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 		//if(!event->get_trigger(SQEvent::MATRIX5)) continue;
 
 		int det_id = hodo4.at(j);
+		std::cout << "det_id : " << det_id << std::endl;
 		if(!acc_h4(det_id)) continue;
 		
 		//int exp_id = fit_prop(det_id, tracklet);
