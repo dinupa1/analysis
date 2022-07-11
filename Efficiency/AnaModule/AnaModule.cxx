@@ -304,7 +304,7 @@ int AnaModule::acc_plane(std::vector<int> &vec)
 // use only good tracks in the denominator
 bool AnaModule::acc_h4(int id)
 {
-	int nacc;
+	int nacc = -1;
 	if(id == 41)
 	{
 		std::vector<int> acc41 = {39, 40, 43};
