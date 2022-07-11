@@ -369,7 +369,7 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 		int det_id = hodo4.at(j);
 		if(!acc_h4(det_id)) continue;
 		
-		std::cout << "det_id : " << det_id << std::endl;
+		//std::cout << "det_id : " << det_id << std::endl;
 		//int exp_id = fit_prop(det_id, tracklet);
 		//int exp_id = fit2d_prop(det_id, tracklet);
 		
