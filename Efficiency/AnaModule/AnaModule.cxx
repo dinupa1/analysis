@@ -281,7 +281,7 @@ int AnaModule::fit2d_prop(int det_id, Tracklet* tracklet)
   return -1;
 }
 
-int AnaModule::acc_plane(Tracklet* tracklet, std::vector<int> &vec)
+int AnaModule::acc_plane(Tracklet* tracklet, std::vector<string> &vec)
 {
 	int nvec = vec.size();
 	//int nhits = hitVector->size();
@@ -289,7 +289,7 @@ int AnaModule::acc_plane(Tracklet* tracklet, std::vector<int> &vec)
 
 	for(int i = 0; i < nvec; i++)
 	{
-		int id_vec = vec.at(i);
+		int id_vec = p_geomSvc->getDetectorID(vec.at(i));
 		double z_exp = p_geomSvc->getPlanePosition(id_vec);
 		double x_exp = tracklet->getExpPositionX(z_exp);
 		double y_exp = tracklet->getExpPositionY(z_exp);
@@ -328,45 +328,45 @@ int AnaModule::acc_h4(Tracklet* tracklet, int id)
 	int nacc = -1;
 
 	// H4Y1L -> H3B, H3T, H4B, H4T
-	if(id == 41)
+	if(id == p_geomSvc->getDetectorID("H4Y1L"))
 	{
-		std::vector<int> acc41 = {39, 40, 45, 46};
+		std::vector<string> acc41 = {"H3B", "H3T", "H4B", "H4T"};
 		nacc = acc_plane(tracklet, acc41);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
-	if(id == 42)
+	if(id == p_geomSvc->getDetectorID("H4Y1R"))
 	{
-		std::vector<int> acc42 = {39, 40, 45, 46};
+		std::vector<string> acc42 = {"H3B", "H3T", "H4B", "H4T"};
 		nacc = acc_plane(tracklet, acc42);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
-	if(id == 43)
+	if(id == p_geomSvc->getDetectorID("H4Y2L"))
 	{
-		std::vector<int> acc43 = {39, 40, 45, 46};
+		std::vector<string> acc43 = {"H3B", "H3T", "H4B", "H4T"};
 		nacc = acc_plane(tracklet, acc43);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
-	if(id == 44)
+	if(id == p_geomSvc->getDetectorID("H4Y2R"))
 	{
-		std::vector<int> acc44 = {39, 40, 45, 46};
+		std::vector<string> acc44 = {"H3B", "H3T", "H4B", "H4T"};
 		nacc = acc_plane(tracklet, acc44);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	// H4B -> P1Y1, P1Y2, P2Y1, P2Y2
-	if(id == 45)
+	if(id == p_geomSvc->getDetectorID("H4B"))
 	{
-		std::vector<int> acc45 = {47, 48, 53, 54};
+		std::vector<string> acc45 = {"P1Y1", "P1Y2", "P2Y1", "P2Y2"};
 		nacc = acc_plane(tracklet, acc45);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
-	if(id == 46)
+	if(id ==  p_geomSvc->getDetectorID("H4T"))
 	{
-		std::vector<int> acc46 = {47, 48, 53, 54};
+		std::vector<string> acc46 = {"P1Y1", "P1Y2", "P2Y1", "P2Y2"};
 		nacc = acc_plane(tracklet, acc46);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
@@ -377,7 +377,7 @@ int AnaModule::acc_h4(Tracklet* tracklet, int id)
 
 void AnaModule::effi_h4(Tracklet* tracklet)
 {
-  std::vector<int> hodo4 = {41, 42, 43, 44, 45, 46};
+  std::vector<string> hodo4 = {"H4Y1L", "H4Y1R", "H4Y2L", "H4Y2R", "H4B", "H4T"};
   int nhodo = hodo4.size();
 		
 	for(int j = 0; j < nhodo; j++)
@@ -388,7 +388,7 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 		//if(!event->get_trigger(SQEvent::NIM4)) continue;
 		//if(!event->get_trigger(SQEvent::MATRIX5)) continue;
 
-		int det_id = hodo4.at(j);
+		int det_id = p_geomSvc->getDetectorID(hodo4.at(j));
 
 		int nacc_hits = acc_h4(tracklet, det_id);
 		if(nacc_hits != 2) continue;
@@ -422,7 +422,7 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 
 void AnaModule::hodo42(Tracklet* tracklet)
 {
-	std::vector<int> vec42 = {35, 36, 43, 44};
+	std::vector<string> vec42 = {"H2L", "H2R", "H4Y2L", "H4Y2R"};
 	int nhodo42 = vec42.size();
 		
 	for(int j = 0; j <  nhodo42; j++)
@@ -433,10 +433,10 @@ void AnaModule::hodo42(Tracklet* tracklet)
 		//if(!event->get_trigger(SQEvent::NIM4)) continue;
 		if(!event->get_trigger(SQEvent::MATRIX5)) continue;
 
-		int hodoid = vec42.at(j);
+		int hodoid = p_geomSvc->getDetectorID(vec42.at(j));
 		
-		int nacc_hits = acc_h4(tracklet, hodoid);
-		if(nacc_hits != 2) continue;
+		//int nacc_hits = acc_h4(tracklet, hodoid);
+		//if(nacc_hits != 2) continue;
 
 
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
@@ -456,7 +456,7 @@ void AnaModule::hodo42(Tracklet* tracklet)
 
 void AnaModule::hodo24(Tracklet* tracklet)
 {
-	std::vector<int> vec24 = {35, 36, 43, 44};
+	std::vector<string> vec24 = {"H2L", "H2R", "H4Y2L", "H4Y2R"};
 	int nhodo24 = vec24.size();
 		
 	for(int j = 0; j <  nhodo24; j++)
@@ -467,10 +467,10 @@ void AnaModule::hodo24(Tracklet* tracklet)
 		if(!event->get_trigger(SQEvent::NIM4)) continue;
 		//if(!event->get_trigger(SQEvent::MATRIX5)) continue;
 	
-		int hodoid = vec24.at(j);
+		int hodoid = p_geomSvc->getDetectorID(vec24.at(j));
 		
-		int nacc_hits = acc_h4(tracklet, hodoid);
-		if(nacc_hits != 2) continue;
+		//int nacc_hits = acc_h4(tracklet, hodoid);
+		//if(nacc_hits != 2) continue;
 
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
 		double x_exp = tracklet->getExpPositionX(z_exp);
