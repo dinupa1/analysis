@@ -48,8 +48,8 @@ int AnaModule::process_event(PHCompositeNode* topNode)
 		if(chisq > 10.) continue;
 		
 		effi_h4(tracklet);
-		//hodo24(tracklet);
-		//hodo42(tracklet);
+		hodo24(tracklet);
+		hodo42(tracklet);
 		
 		saveTree->Fill();
 		
@@ -397,8 +397,8 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 
 		std::cout << "*** accepted track ***" << std::endl;
 
-		hodo24(tracklet);
-		hodo42(tracklet);
+		//hodo24(tracklet);
+		//hodo42(tracklet);
 
 		//std::cout << "det_id : " << det_id << std::endl;
 		//int exp_id = fit_prop(det_id, tracklet);
