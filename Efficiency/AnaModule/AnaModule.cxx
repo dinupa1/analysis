@@ -332,28 +332,28 @@ int AnaModule::acc_h4(Tracklet* tracklet, int id)
 	// H4Y1L -> H3B, H3T, H4B, H4T
 	if(id == p_geomSvc->getDetectorID("H4Y1L"))
 	{
-		std::vector<string> acc41 = {"H3B", "H3T", "H4B", "H4T"};
+		std::vector<std::string> acc41 = {"H3B", "H3T", "H4B", "H4T"};
 		nacc = acc_plane(tracklet, acc41);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == p_geomSvc->getDetectorID("H4Y1R"))
 	{
-		std::vector<string> acc42 = {"H3B", "H3T", "H4B", "H4T"};
+		std::vector<std::string> acc42 = {"H3B", "H3T", "H4B", "H4T"};
 		nacc = acc_plane(tracklet, acc42);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == p_geomSvc->getDetectorID("H4Y2L"))
 	{
-		std::vector<string> acc43 = {"H3B", "H3T", "H4B", "H4T"};
+		std::vector<std::string> acc43 = {"H3B", "H3T", "H4B", "H4T"};
 		nacc = acc_plane(tracklet, acc43);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == p_geomSvc->getDetectorID("H4Y2R"))
 	{
-		std::vector<string> acc44 = {"H3B", "H3T", "H4B", "H4T"};
+		std::vector<std::string> acc44 = {"H3B", "H3T", "H4B", "H4T"};
 		nacc = acc_plane(tracklet, acc44);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
@@ -361,14 +361,14 @@ int AnaModule::acc_h4(Tracklet* tracklet, int id)
 	// H4B -> P1Y1, P1Y2, P2Y1, P2Y2
 	if(id == p_geomSvc->getDetectorID("H4B"))
 	{
-		std::vector<string> acc45 = {"P1Y1", "P1Y2", "P2Y1", "P2Y2"};
+		std::vector<std::string> acc45 = {"P1Y1", "P1Y2", "P2Y1", "P2Y2"};
 		nacc = acc_plane(tracklet, acc45);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id ==  p_geomSvc->getDetectorID("H4T"))
 	{
-		std::vector<string> acc46 = {"P1Y1", "P1Y2", "P2Y1", "P2Y2"};
+		std::vector<std::string> acc46 = {"P1Y1", "P1Y2", "P2Y1", "P2Y2"};
 		nacc = acc_plane(tracklet, acc46);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
@@ -379,7 +379,7 @@ int AnaModule::acc_h4(Tracklet* tracklet, int id)
 
 void AnaModule::effi_h4(Tracklet* tracklet)
 {
-  std::vector<string> hodo4 = {"H4Y1L", "H4Y1R", "H4Y2L", "H4Y2R", "H4B", "H4T"};
+  std::vector<std::string> hodo4 = {"H4Y1L", "H4Y1R", "H4Y2L", "H4Y2R", "H4B", "H4T"};
   int nhodo = hodo4.size();
 		
 	for(int j = 0; j < nhodo; j++)
@@ -424,7 +424,7 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 
 void AnaModule::hodo42(Tracklet* tracklet)
 {
-	std::vector<string> vec42 = {"H2L", "H2R", "H4Y2L", "H4Y2R"};
+	std::vector<std::string> vec42 = {"H2L", "H2R", "H4Y2L", "H4Y2R"};
 	int nhodo42 = vec42.size();
 		
 	for(int j = 0; j <  nhodo42; j++)
@@ -458,7 +458,7 @@ void AnaModule::hodo42(Tracklet* tracklet)
 
 void AnaModule::hodo24(Tracklet* tracklet)
 {
-	std::vector<string> vec24 = {"H2L", "H2R", "H4Y2L", "H4Y2R"};
+	std::vector<std::string> vec24 = {"H2L", "H2R", "H4Y2L", "H4Y2R"};
 	int nhodo24 = vec24.size();
 		
 	for(int j = 0; j <  nhodo24; j++)
