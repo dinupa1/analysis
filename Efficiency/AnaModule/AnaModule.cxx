@@ -283,7 +283,7 @@ int AnaModule::fit2d_prop(int det_id, Tracklet* tracklet)
   return -1;
 }
 
-int AnaModule::acc_plane(Tracklet* tracklet, std::vector<string> &vec)
+int AnaModule::acc_plane(Tracklet* tracklet, std::vector<std::string> &vec)
 {
 	int nvec = vec.size();
 	//int nhits = hitVector->size();
