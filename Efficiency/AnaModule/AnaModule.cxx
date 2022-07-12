@@ -281,20 +281,36 @@ int AnaModule::fit2d_prop(int det_id, Tracklet* tracklet)
   return -1;
 }
 
-int AnaModule::acc_plane(std::vector<int> &vec)
+int AnaModule::acc_plane(Tracklet* tracklet, std::vector<int> &vec)
 {
 	int nvec = vec.size();
-	int nhits = hitVector->size();
+	//int nhits = hitVector->size();
 	std::vector<int> acc_mask;
 
-	for(int i = 0; i < nhits; i++)
+	for(int i = 0; i < nvec; i++)
+	{
+		int id_vec = vec.at(i);
+		double z_exp = p_geomSvc->getPlanePosition(id_vec);
+		double x_exp = tracklet->getExpPositionX(z_exp);
+		double y_exp = tracklet->getExpPositionY(z_exp);
+		
+		if(!p_geomSvc->isInPlane(id_vec, x_exp, y_exp)) continue;
+		
+		int id_acc = p_geomSvc->getExpElementID(id_vec, tracklet->getExpPositionW(id_vec));
+		
+		if(id_acc < 1 || id_acc > p_geomSvc->getPlaneNElements(id_vec)) continue;
+
+		acc_mask.push_back(id_acc);
+	}
+
+	/*for(int i = 0; i < nhits; i++)
 	{
 		for(int j = 0; j < nvec; j++)
 		{
 			SQHit* hit = hitVector->at(i);
 			if(hit->get_detector_id() == vec.at(j)){acc_mask.push_back(hit->get_detector_id());}
 		}
-	}
+	}*/
 
 	int mask_hits = acc_mask.size();
 	acc_mask.clear();
@@ -303,49 +319,49 @@ int AnaModule::acc_plane(std::vector<int> &vec)
 }
 
 // use only good tracks in the denominator
-bool AnaModule::acc_h4(int id)
+bool AnaModule::acc_h4(Tracklet* tracklet, int id)
 {
 	int nacc = -1;
 	if(id == 41)
 	{
 		std::vector<int> acc41 = {39, 40, 45, 46};
-		nacc = acc_plane(acc41);
-		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		nacc = acc_plane(tracklet, acc41);
+		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == 42)
 	{
 		std::vector<int> acc42 = {39, 40, 45, 46};
-		nacc = acc_plane(acc42);
-		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		nacc = acc_plane(tracklet, acc42);
+		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == 43)
 	{
 		std::vector<int> acc43 = {39, 40, 45, 46};
-		nacc = acc_plane(acc43);
-		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		nacc = acc_plane(tracklet, acc43);
+		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == 44)
 	{
 		std::vector<int> acc44 = {39, 40, 45, 46};
-		nacc = acc_plane(acc44);
-		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		nacc = acc_plane(tracklet, acc44);
+		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == 45)
 	{
 		std::vector<int> acc45 = {47, 48, 51, 52};
-		nacc = acc_plane(acc45);
-		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		nacc = acc_plane(tracklet, acc45);
+		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == 46)
 	{
 		std::vector<int> acc46 = {47, 48, 51, 52};
-		nacc = acc_plane(acc46);
-		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		nacc = acc_plane(trackelt, acc46);
+		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(nacc >= 2 && nacc <= 4){return true;}
@@ -414,8 +430,13 @@ void AnaModule::hodo42(Tracklet* tracklet)
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
 		double x_exp = tracklet->getExpPositionX(z_exp);
 		double y_exp = tracklet->getExpPositionY(z_exp);
+		
 		if(!p_geomSvc->isInPlane(hodoid, x_exp, y_exp)) continue;
+		
 		int id42 = p_geomSvc->getExpElementID(hodoid, tracklet->getExpPositionW(hodoid));
+
+		if(id42 < 1 || id42 > p_geomSvc->getPlaneNElements(hodoid)) continue;
+
 		ele42.push_back(id42);
 	}
 }
@@ -441,8 +462,13 @@ void AnaModule::hodo24(Tracklet* tracklet)
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
 		double x_exp = tracklet->getExpPositionX(z_exp);
 		double y_exp = tracklet->getExpPositionY(z_exp);
+
 		if(!p_geomSvc->isInPlane(hodoid, x_exp, y_exp)) continue;
+
 		int id24 = p_geomSvc->getExpElementID(hodoid, tracklet->getExpPositionW(hodoid));
+
+		if(exp_id < 1 || exp_id > p_geomSvc->getPlaneNElements(det_id)) continue;
+
 		ele24.push_back(id24);
 	}
 }
