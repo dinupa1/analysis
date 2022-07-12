@@ -302,7 +302,7 @@ int AnaModule::acc_plane(Tracklet* tracklet, std::vector<int> &vec)
 
 		SQHit* hit = findHit(id_vec, id_acc);
 		int clo_id = hit == nullptr ? -1 : hit->get_element_id();
-		if(clo_id > -1){acc_mask.push_back(clo_id);}
+		if(clo_id > -1 && abs(id_acc - clo_id) < 2){acc_mask.push_back(clo_id);}
 	}
 
 	/*for(int i = 0; i < nhits; i++)
@@ -321,7 +321,7 @@ int AnaModule::acc_plane(Tracklet* tracklet, std::vector<int> &vec)
 }
 
 // use only good tracks in the denominator
-bool AnaModule::acc_h4(Tracklet* tracklet, int id)
+int AnaModule::acc_h4(Tracklet* tracklet, int id)
 {
 	int nacc = -1;
 
@@ -354,23 +354,22 @@ bool AnaModule::acc_h4(Tracklet* tracklet, int id)
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
-	// H4B -> P1Y1, P1Y2, P2X1, P2X2
+	// H4B -> P1Y1, P1Y2, P2Y1, P2Y2
 	if(id == 45)
 	{
-		std::vector<int> acc45 = {47, 48, 51, 52};
+		std::vector<int> acc45 = {47, 48, 53, 54};
 		nacc = acc_plane(tracklet, acc45);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == 46)
 	{
-		std::vector<int> acc46 = {47, 48, 51, 52};
+		std::vector<int> acc46 = {47, 48, 53, 54};
 		nacc = acc_plane(tracklet, acc46);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
-	if(nacc >= 2){return true;}
-	return false;
+	return nacc;
 }
 
 
@@ -388,7 +387,11 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 		//if(!event->get_trigger(SQEvent::MATRIX5)) continue;
 
 		int det_id = hodo4.at(j);
-		if(!acc_h4(tracklet, det_id)) continue;
+
+		int nacc_hits = acc_h4(tracklet, det_id);
+		if(nacc_hits != 2) continue;
+
+		std::cout << "*** accepted track ***" << std::endl;
 		
 		//std::cout << "det_id : " << det_id << std::endl;
 		//int exp_id = fit_prop(det_id, tracklet);
@@ -429,7 +432,9 @@ void AnaModule::hodo42(Tracklet* tracklet)
 		if(!event->get_trigger(SQEvent::MATRIX5)) continue;
 
 		int hodoid = vec42.at(j);
-		if(!acc_h4(tracklet, hodoid)) continue;
+		
+		int nacc_hits = acc_h4(tracklet, det_id);
+		if(nacc_hits != 2) continue;
 
 
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
@@ -461,8 +466,9 @@ void AnaModule::hodo24(Tracklet* tracklet)
 		//if(!event->get_trigger(SQEvent::MATRIX5)) continue;
 	
 		int hodoid = vec24.at(j);
-		if(!acc_h4(tracklet, hodoid)) continue;
-
+		
+		int nacc_hits = acc_h4(tracklet, det_id);
+		if(nacc_hits != 2) continue;
 
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
 		double x_exp = tracklet->getExpPositionX(z_exp);
