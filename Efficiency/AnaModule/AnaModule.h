@@ -15,7 +15,8 @@
 #include <ktracker/FastTracklet.h>
 #include <geom_svc/GeomSvc.h>
 #include <interface_main/SQHit_v1.h>
-
+#include <vector>
+#include <string>
 
 class TFile;
 class TTree;
