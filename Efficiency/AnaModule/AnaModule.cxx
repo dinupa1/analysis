@@ -360,7 +360,7 @@ bool AnaModule::acc_h4(Tracklet* tracklet, int id)
 	if(id == 46)
 	{
 		std::vector<int> acc46 = {47, 48, 51, 52};
-		nacc = acc_plane(trackelt, acc46);
+		nacc = acc_plane(tracklet, acc46);
 		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
