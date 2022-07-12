@@ -302,8 +302,9 @@ int AnaModule::acc_plane(Tracklet* tracklet, std::vector<int> &vec)
 
 		SQHit* hit = findHit(id_vec, id_acc);
 		int clo_id = hit == nullptr ? -1 : hit->get_element_id();
+		if(clo_id < 0) continue;
 		std::cout <<"vec_id : " << id_vec <<" acc_id : " << id_acc << " clo_id : " << clo_id << std::endl;
-		if(clo_id > -1 && abs(id_acc - clo_id) < 2){acc_mask.push_back(clo_id);}
+		if(abs(id_acc - clo_id) < 2){acc_mask.push_back(clo_id);}
 	}
 
 	/*for(int i = 0; i < nhits; i++)
