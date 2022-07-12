@@ -383,7 +383,7 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 		//if(!event->get_trigger(SQEvent::MATRIX5)) continue;
 
 		int det_id = hodo4.at(j);
-		if(!acc_h4(det_id)) continue;
+		if(!acc_h4(tracklet, det_id)) continue;
 		
 		//std::cout << "det_id : " << det_id << std::endl;
 		//int exp_id = fit_prop(det_id, tracklet);
@@ -424,7 +424,7 @@ void AnaModule::hodo42(Tracklet* tracklet)
 		if(!event->get_trigger(SQEvent::MATRIX5)) continue;
 
 		int hodoid = vec42.at(j);
-		if(!acc_h4(hodoid)) continue;
+		if(!acc_h4(tracklet, hodoid)) continue;
 
 
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
@@ -456,7 +456,7 @@ void AnaModule::hodo24(Tracklet* tracklet)
 		//if(!event->get_trigger(SQEvent::MATRIX5)) continue;
 	
 		int hodoid = vec24.at(j);
-		if(!acc_h4(hodoid)) continue;
+		if(!acc_h4(tracklet, hodoid)) continue;
 
 
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
@@ -467,7 +467,7 @@ void AnaModule::hodo24(Tracklet* tracklet)
 
 		int id24 = p_geomSvc->getExpElementID(hodoid, tracklet->getExpPositionW(hodoid));
 
-		if(exp_id < 1 || exp_id > p_geomSvc->getPlaneNElements(det_id)) continue;
+		if(id24 < 1 || id24 > p_geomSvc->getPlaneNElements(hodoid)) continue;
 
 		ele24.push_back(id24);
 	}
