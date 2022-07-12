@@ -300,7 +300,9 @@ int AnaModule::acc_plane(Tracklet* tracklet, std::vector<int> &vec)
 		
 		if(id_acc < 1 || id_acc > p_geomSvc->getPlaneNElements(id_vec)) continue;
 
-		acc_mask.push_back(id_acc);
+		SQHit* hit = findHit(id_vec, id_acc);
+		int clo_id = hit == nullptr ? -1 : hit->get_element_id();
+		if(clo_id > -1){acc_mask.push_back(clo_id);}
 	}
 
 	/*for(int i = 0; i < nhits; i++)
@@ -328,28 +330,28 @@ bool AnaModule::acc_h4(Tracklet* tracklet, int id)
 	{
 		std::vector<int> acc41 = {39, 40, 45, 46};
 		nacc = acc_plane(tracklet, acc41);
-		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == 42)
 	{
 		std::vector<int> acc42 = {39, 40, 45, 46};
 		nacc = acc_plane(tracklet, acc42);
-		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == 43)
 	{
 		std::vector<int> acc43 = {39, 40, 45, 46};
 		nacc = acc_plane(tracklet, acc43);
-		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == 44)
 	{
 		std::vector<int> acc44 = {39, 40, 45, 46};
 		nacc = acc_plane(tracklet, acc44);
-		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	// H4B -> P1Y1, P1Y2, P2X1, P2X2
@@ -357,14 +359,14 @@ bool AnaModule::acc_h4(Tracklet* tracklet, int id)
 	{
 		std::vector<int> acc45 = {47, 48, 51, 52};
 		nacc = acc_plane(tracklet, acc45);
-		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == 46)
 	{
 		std::vector<int> acc46 = {47, 48, 51, 52};
 		nacc = acc_plane(tracklet, acc46);
-		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(nacc >= 2){return true;}
