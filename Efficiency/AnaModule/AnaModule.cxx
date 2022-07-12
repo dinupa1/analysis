@@ -334,28 +334,28 @@ int AnaModule::acc_h4(Tracklet* tracklet, int id)
 	{
 		std::vector<std::string> acc41 = {"H3B", "H3T", "H4B", "H4T"};
 		nacc = acc_plane(tracklet, acc41);
-		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == p_geomSvc->getDetectorID("H4Y1R"))
 	{
 		std::vector<std::string> acc42 = {"H3B", "H3T", "H4B", "H4T"};
 		nacc = acc_plane(tracklet, acc42);
-		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == p_geomSvc->getDetectorID("H4Y2L"))
 	{
 		std::vector<std::string> acc43 = {"H3B", "H3T", "H4B", "H4T"};
 		nacc = acc_plane(tracklet, acc43);
-		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == p_geomSvc->getDetectorID("H4Y2R"))
 	{
 		std::vector<std::string> acc44 = {"H3B", "H3T", "H4B", "H4T"};
 		nacc = acc_plane(tracklet, acc44);
-		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	// H4B -> P1Y1, P1Y2, P2Y1, P2Y2
@@ -363,14 +363,14 @@ int AnaModule::acc_h4(Tracklet* tracklet, int id)
 	{
 		std::vector<std::string> acc45 = {"P1Y1", "P1Y2", "P2Y1", "P2Y2"};
 		nacc = acc_plane(tracklet, acc45);
-		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id ==  p_geomSvc->getDetectorID("H4T"))
 	{
 		std::vector<std::string> acc46 = {"P1Y1", "P1Y2", "P2Y1", "P2Y2"};
 		nacc = acc_plane(tracklet, acc46);
-		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	return nacc;
@@ -395,7 +395,7 @@ void AnaModule::effi_h4(Tracklet* tracklet)
 		int nacc_hits = acc_h4(tracklet, det_id);
 		if(nacc_hits != 2) continue;
 
-		std::cout << "*** accepted track ***" << std::endl;
+		//std::cout << "*** accepted track ***" << std::endl;
 
 		//hodo24(tracklet);
 		//hodo42(tracklet);
