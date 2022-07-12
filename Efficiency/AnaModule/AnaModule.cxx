@@ -322,46 +322,49 @@ int AnaModule::acc_plane(Tracklet* tracklet, std::vector<int> &vec)
 bool AnaModule::acc_h4(Tracklet* tracklet, int id)
 {
 	int nacc = -1;
+
+	// H4Y1L -> H3B, H3T, H4B, H4T
 	if(id == 41)
 	{
 		std::vector<int> acc41 = {39, 40, 45, 46};
 		nacc = acc_plane(tracklet, acc41);
-		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == 42)
 	{
 		std::vector<int> acc42 = {39, 40, 45, 46};
 		nacc = acc_plane(tracklet, acc42);
-		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == 43)
 	{
 		std::vector<int> acc43 = {39, 40, 45, 46};
 		nacc = acc_plane(tracklet, acc43);
-		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == 44)
 	{
 		std::vector<int> acc44 = {39, 40, 45, 46};
 		nacc = acc_plane(tracklet, acc44);
-		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
+	// H4B -> P1Y1, P1Y2, P2X1, P2X2
 	if(id == 45)
 	{
 		std::vector<int> acc45 = {47, 48, 51, 52};
 		nacc = acc_plane(tracklet, acc45);
-		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == 46)
 	{
 		std::vector<int> acc46 = {47, 48, 51, 52};
 		nacc = acc_plane(tracklet, acc46);
-		std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
+		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(nacc >= 2 && nacc <= 4){return true;}
