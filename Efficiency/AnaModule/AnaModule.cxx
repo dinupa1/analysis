@@ -8,6 +8,8 @@
 #include <interface_main/SQTrackVector_v1.h>
 #include <interface_main/SQDimuonVector_v1.h>
 
+#include <string>
+#include <vector>
 
 #include "AnaModule.h"
 
