@@ -367,7 +367,7 @@ bool AnaModule::acc_h4(Tracklet* tracklet, int id)
 		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
-	if(nacc >= 2 && nacc <= 4){return true;}
+	if(nacc >= 2){return true;}
 	return false;
 }
 
