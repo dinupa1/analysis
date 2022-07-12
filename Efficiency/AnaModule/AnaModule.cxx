@@ -433,7 +433,7 @@ void AnaModule::hodo42(Tracklet* tracklet)
 
 		int hodoid = vec42.at(j);
 		
-		int nacc_hits = acc_h4(tracklet, det_id);
+		int nacc_hits = acc_h4(tracklet, hodoid);
 		if(nacc_hits != 2) continue;
 
 
@@ -467,7 +467,7 @@ void AnaModule::hodo24(Tracklet* tracklet)
 	
 		int hodoid = vec24.at(j);
 		
-		int nacc_hits = acc_h4(tracklet, det_id);
+		int nacc_hits = acc_h4(tracklet, hodoid);
 		if(nacc_hits != 2) continue;
 
 		double z_exp = p_geomSvc->getPlanePosition(hodoid);
