@@ -332,28 +332,28 @@ int AnaModule::acc_h4(Tracklet* tracklet, int id)
 	// H4Y1L -> H3B, H3T, H4B, H4T
 	if(id == p_geomSvc->getDetectorID("H4Y1L"))
 	{
-		std::vector<std::string> acc41 = {"H3B", "H3T", "H4B", "H4T"};
+		std::vector<std::string> acc41 = {"P1Y1", "P1Y2", "P2Y1", "P2Y2"};
 		nacc = acc_plane(tracklet, acc41);
 		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == p_geomSvc->getDetectorID("H4Y1R"))
 	{
-		std::vector<std::string> acc42 = {"H3B", "H3T", "H4B", "H4T"};
+		std::vector<std::string> acc42 = {"P1Y1", "P1Y2", "P2Y1", "P2Y2"};
 		nacc = acc_plane(tracklet, acc42);
 		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == p_geomSvc->getDetectorID("H4Y2L"))
 	{
-		std::vector<std::string> acc43 = {"H3B", "H3T", "H4B", "H4T"};
+		std::vector<std::string> acc43 = {"P1Y1", "P1Y2", "P2Y1", "P2Y1"};
 		nacc = acc_plane(tracklet, acc43);
 		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id == p_geomSvc->getDetectorID("H4Y2R"))
 	{
-		std::vector<std::string> acc44 = {"H3B", "H3T", "H4B", "H4T"};
+		std::vector<std::string> acc44 = {"P1Y1", "P1Y2", "P2Y1", "P2Y2"};
 		nacc = acc_plane(tracklet, acc44);
 		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
@@ -361,14 +361,14 @@ int AnaModule::acc_h4(Tracklet* tracklet, int id)
 	// H4B -> P1Y1, P1Y2, P2Y1, P2Y2
 	if(id == p_geomSvc->getDetectorID("H4B"))
 	{
-		std::vector<std::string> acc45 = {"P1Y1", "P1Y2", "P2Y1", "P2Y2"};
+		std::vector<std::string> acc45 = {"P1X1", "P1X2", "P2X1", "P2X2"};
 		nacc = acc_plane(tracklet, acc45);
 		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
 
 	if(id ==  p_geomSvc->getDetectorID("H4T"))
 	{
-		std::vector<std::string> acc46 = {"P1Y1", "P1Y2", "P2Y1", "P2Y2"};
+		std::vector<std::string> acc46 = {"P1X1", "P1X2", "P2X1", "P2X2"};
 		nacc = acc_plane(tracklet, acc46);
 		//std::cout << "det_id : " << id << " nacc : " << nacc << std::endl;
 	}
